@@ -1,0 +1,1308 @@
+<!DOCTYPE html> <!-- [HTML5 SEMÁNTICO] Declara documento HTML5 estándar para compatibilidad y auditoría a11y -->
+<html lang="es"> <!-- [A11Y] Define español como idioma principal del estudio jurídico VGMS -->
+
+<head> <!-- [HEAD] Metadatos, PWA, tipografías, estilos y seguridad anti-XSS -->
+  <meta charset="UTF-8"> <!-- [CODIFICACIÓN] Garantiza correcta visualización de tildes, eñes y símbolos legales -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- [MOBILE-FIRST] Ajusta escala al ancho real del dispositivo -->
+  <meta name="theme-color" content="#1b2432"> <!-- [PWA THEME] Pinta la barra del navegador móvil con azul pizarra VGMS -->
+  <meta name="description" content="VGMS Abogados & Consultores S.R.L. — Catálogo de servicios legales, Propiedad Intelectual, Derecho Corporativo, Civil y Penal en La Paz, Bolivia con soporte PWA Offline-First."> <!-- [SEO/A11Y] Descripción institucional para buscadores y lectores de pantalla -->
+  <title>VGMS Abogados &amp; Consultores — Catálogo de Servicios Legales</title> <!-- [SEO] Título institucional del estudio fundado por Dr. Francisco Vela -->
+
+  <link rel="manifest" href="manifest.json"> <!-- [PWA MANIFEST] Vincula el manifiesto JSON estricto (start_url, íconos VGMS y display standalone) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- [PERFORMANCE] Preconecta al servidor de Google Fonts para mejorar LCP -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- [PERFORMANCE] Preconecta con CORS al origen de fuentes estáticas -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=PT+Sans:wght@400;700&display=swap"> <!-- [TIPOGRAFÍA VGMS] Carga Merriweather y PT Sans usadas en vgms.com.bo/wp/ -->
+  <link rel="stylesheet" href="styles.css?v=1"> <!-- [ESTILOS CSS] Enlaza la hoja Mobile-First con tokens 60-30-10 y BEM -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> <!-- [ICONOGRAFÍA] Carga librería vectorial Font Awesome 6.5.0 -->
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script> <!-- [ANTI-XSS] Carga DOMPurify para sanitizar toda inserción HTML dinámica -->
+</head>
+
+<body class="theme-light"> <!-- [TEMA INICIAL] Inicia en modo claro institucional alternable a modo oscuro y alto contraste WCAG -->
+
+  <div class="contenedor-app"> <!-- [UN SOLO CÓDIGO BASE] Contenedor Flexbox: columna en móvil y dos columnas en escritorio -->
+
+    <nav class="dock-acciones" aria-label="Navegación principal de VGMS Abogados"> <!-- [DOCK ADAPTABLE] Barra inferior fija en móvil y sidebar izquierdo en desktop -->
+
+      <div class="dock-acciones__brand"> <!-- [BRANDING SIDEBAR] Identidad VGMS visible en barra lateral de escritorio -->
+        <span class="dock-acciones__logo-icon"><i class="fa-solid fa-scale-balanced"></i></span> <!-- [ICONO MARCA] Balanza jurídica institucional -->
+        <div class="dock-acciones__brand-text"> <!-- [MARCA TEXTO] Contenedor de nombre y subtítulo del estudio -->
+          <span class="dock-acciones__title">VGMS <span>Legal</span></span> <!-- [MARCA] Siglas oficiales del estudio jurídico -->
+          <span class="dock-acciones__subtitle">Abogados &amp; Consultores</span> <!-- [SUBTÍTULO] Razón social de la firma -->
+        </div>
+      </div>
+
+      <div class="dock-acciones__items" role="tablist"> <!-- [RBAC NAV] Lista de pestañas filtradas dinámicamente según el rol activo -->
+        <button type="button" class="dock-acciones__btn active" data-tab="tab-inicio" data-roles="cliente" role="tab" aria-selected="true" aria-label="Ir a Inicio y Firma VGMS"> <!-- [RBAC CLIENTE] Pestaña Inicio del estudio -->
+          <i class="fa-solid fa-landmark"></i> <!-- [ICONO] Icono institucional del estudio -->
+          <span>Firma</span> <!-- [ETIQUETA] Texto de navegación corto -->
+        </button>
+        <button type="button" class="dock-acciones__btn" data-tab="tab-catalogo" data-roles="cliente" role="tab" aria-selected="false" aria-label="Ir al Catálogo de Servicios Legales"> <!-- [RBAC CLIENTE] Pestaña Catálogo jurídico -->
+          <i class="fa-solid fa-briefcase"></i> <!-- [ICONO] Portafolio jurídico -->
+          <span>Catálogo</span> <!-- [ETIQUETA] Acceso directo al catálogo -->
+        </button>
+        <button type="button" class="dock-acciones__btn" data-tab="tab-agendar" data-roles="cliente" role="tab" aria-selected="false" aria-label="Ir a Agendar Consulta Jurídica"> <!-- [RBAC CLIENTE] Pestaña de agendamiento -->
+          <i class="fa-solid fa-calendar-check"></i> <!-- [ICONO] Calendario de citas legales -->
+          <span>Agendar</span> <!-- [ETIQUETA] Acceso a formulario de consulta -->
+        </button>
+        <button type="button" class="dock-acciones__btn" data-tab="tab-mis-consultas" data-roles="cliente" role="tab" aria-selected="false" aria-label="Ir a Mis Consultas y Bitácora"> <!-- [RBAC CLIENTE] Pestaña historial personal -->
+          <i class="fa-solid fa-folder-open"></i> <!-- [ICONO] Expediente del cliente -->
+          <span>Expediente</span> <!-- [ETIQUETA] Consultas, cola rápida y bitácora -->
+        </button>
+
+        <button type="button" class="dock-acciones__btn" data-tab="tab-abogado-agenda" data-roles="trabajador" role="tab" aria-selected="false" aria-label="Ir a Agenda Operativa del Estudio" style="display: none;"> <!-- [RBAC TRABAJADOR] Agenda operativa diaria para abogados -->
+          <i class="fa-solid fa-clipboard-list"></i> <!-- [ICONO] Lista operativa del día -->
+          <span>Agenda Legal</span> <!-- [ETIQUETA] Vista exclusiva de trabajador -->
+        </button>
+        <button type="button" class="dock-acciones__btn" data-tab="tab-abogado-servicios" data-roles="trabajador" role="tab" aria-selected="false" aria-label="Ir a Disponibilidad de Especialidades" style="display: none;"> <!-- [RBAC TRABAJADOR] Monitor en vivo de servicios -->
+          <i class="fa-solid fa-table-cells-large"></i> <!-- [ICONO] Tablero de servicios -->
+          <span>Especialidades</span> <!-- [ETIQUETA] Estado en vivo de áreas -->
+        </button>
+
+        <button type="button" class="dock-acciones__btn" data-tab="tab-admin-kpi" data-roles="admin" role="tab" aria-selected="false" aria-label="Ir a Dashboard Gerencial de Socios" style="display: none;"> <!-- [RBAC ADMIN] Dashboard KPI para Socio Director -->
+          <i class="fa-solid fa-chart-pie"></i> <!-- [ICONO] Métricas gerenciales -->
+          <span>Dashboard KPI</span> <!-- [ETIQUETA] Indicadores financieros del estudio -->
+        </button>
+        <button type="button" class="dock-acciones__btn" data-tab="tab-admin-servicios" data-roles="admin" role="tab" aria-selected="false" aria-label="Ir a Gestión de Servicios y Honorarios" style="display: none;"> <!-- [RBAC ADMIN] Gestión de tarifas/honorarios S1-S8 -->
+          <i class="fa-solid fa-sliders"></i> <!-- [ICONO] Controles de honorarios -->
+          <span>Honorarios</span> <!-- [ETIQUETA] Editor de catálogo en MySQL -->
+        </button>
+        <button type="button" class="dock-acciones__btn" data-tab="tab-admin-historial" data-roles="admin" role="tab" aria-selected="false" aria-label="Ir al Historial Global de Consultas" style="display: none;"> <!-- [RBAC ADMIN] Tabla global de consultas del estudio -->
+          <i class="fa-solid fa-table-list"></i> <!-- [ICONO] Tabla global administrativa -->
+          <span>Historial Global</span> <!-- [ETIQUETA] Registro completo con anulación -->
+        </button>
+
+        <button type="button" class="dock-acciones__btn" data-tab="tab-info" data-roles="cliente trabajador admin" role="tab" aria-selected="false" aria-label="Ir a Auditoría y Principios Éticos"> <!-- [RBAC COMPARTIDO] Auditoría UPDS accesible para los 3 roles -->
+          <i class="fa-solid fa-graduation-cap"></i> <!-- [ICONO] Auditoría académica y ética -->
+          <span>Auditoría</span> <!-- [ETIQUETA] Simulaciones WCAG y canales -->
+        </button>
+      </div>
+
+      <div class="dock-acciones__footer"> <!-- [DOCK FOOTER] Controles de sesión, red, modo oscuro e instalación PWA -->
+        <div class="auth-dock-box"> <!-- [AUTH DOCK] Caja de login/perfil en barra lateral desktop -->
+          <button type="button" id="btnAbrirLoginDock" class="btn btn-login-trigger" style="width: 100%;"> <!-- [AUTH TRIGGER] Abre modal de login RBAC -->
+            <i class="fa-solid fa-right-to-bracket"></i> <span>Iniciar Sesión</span> <!-- [AUTH LABEL] Texto del botón login -->
+          </button>
+          <div id="userProfileBadgeDock" class="user-profile-badge" style="display: none; width: 100%;"> <!-- [AUTH PERFIL] Muestra usuario autenticado y rol -->
+            <span class="user-avatar-icon"><i class="fa-solid fa-user-tie"></i></span> <!-- [AUTH AVATAR] Icono profesional -->
+            <div class="user-info-text"> <!-- [AUTH INFO] Nombre y etiqueta de rol -->
+              <strong id="userDisplayNameDock">Usuario</strong> <!-- [AUTH NOMBRE] Inyectado vía JS -->
+              <span id="userRoleBadgeDock" class="user-role-tag">Cliente</span> <!-- [AUTH ROL] Badge dinámico por rol -->
+            </div>
+            <button type="button" id="btnCerrarSesionDock" class="btn-logout" aria-label="Cerrar sesión" title="Cerrar sesión"> <!-- [AUTH LOGOUT] Botón de cierre de sesión -->
+              <i class="fa-solid fa-right-from-bracket"></i> <!-- [ICONO LOGOUT] Salida segura -->
+            </button>
+          </div>
+        </div>
+
+        <span id="estadoRed" class="estado-red-badge" role="status">🟢 En Línea</span> <!-- [RED PWA] Indicador reactivo navigator.onLine -->
+        <button type="button" id="theme-toggle-btn" class="action-btn theme-btn" aria-label="Cambiar tema claro u oscuro" title="Cambiar tema claro / oscuro"> <!-- [DARK MODE] Alterna tema claro/oscuro en desktop -->
+          <i class="fa-solid fa-moon icon-moon"></i> <!-- [ICONO LUNA] Visible en tema claro -->
+          <i class="fa-solid fa-sun icon-sun" style="display: none;"></i> <!-- [ICONO SOL] Visible en tema oscuro -->
+        </button>
+        <button type="button" id="btnInstalarPWA" class="btn-instalar-pwa" hidden aria-label="Instalar VGMS Legal en tu dispositivo"> <!-- [PWA INSTALL] Botón disparado por beforeinstallprompt -->
+          <i class="fa-solid fa-download"></i> Instalar App <!-- [PWA LABEL] Texto de instalación -->
+        </button>
+      </div>
+
+    </nav>
+
+    <div class="area-contenido"> <!-- [CONTENIDO PRINCIPAL] Columna derecha en desktop y cuerpo completo en móvil -->
+
+      <header class="app-header"> <!-- [HEADER SEMÁNTICO] Cabecera sticky con marca, estado del estudio y acciones rápidas -->
+        <div class="app-header__brand"> <!-- [HEADER MARCA] Identidad compacta visible en todas las vistas -->
+          <img src="https://vgms.com.bo/wp/wp-content/uploads/2025/06/cropped-iconvgms-192x192.png" alt="Isotipo oficial VGMS Abogados y Consultores" class="app-header__logo-img" width="36" height="36"> <!-- [LOGO REAL] Isotipo oficial VGMS con alt y dimensiones fijas anti-CLS -->
+          <h1 class="app-header__title">VGMS <span>Abogados</span> <small>Estudio Jurídico • La Paz</small></h1> <!-- [H1] Encabezado principal único para jerarquía SEO/a11y -->
+          <div class="status-indicator-badge"> <!-- [ESTADO OFICINA] Indicador visual de atención activa -->
+            <span class="status-dot"></span> <!-- [INDICADOR] Punto luminoso de disponibilidad -->
+            <span class="status-text">Atención Activa</span> <!-- [ESTADO] Horario hábil de consultoría -->
+          </div>
+        </div>
+
+        <div class="app-header__actions"> <!-- [HEADER ACCIONES] Controles visibles en móvil/tablet antes de pasar al sidebar -->
+          <div class="auth-header-box"> <!-- [AUTH HEADER] Caja de autenticación móvil -->
+            <button type="button" id="btnAbrirLogin" class="btn btn-login-trigger" aria-label="Iniciar sesión en plataforma VGMS"> <!-- [AUTH TRIGGER] Abre modal login desde móvil -->
+              <i class="fa-solid fa-right-to-bracket"></i> <span>Ingresar</span> <!-- [AUTH LABEL] Texto compacto -->
+            </button>
+            <div id="userProfileBadge" class="user-profile-badge" style="display: none;"> <!-- [AUTH PERFIL] Perfil activo en móvil -->
+              <span class="user-avatar-icon"><i class="fa-solid fa-user-tie"></i></span> <!-- [AUTH AVATAR] Icono -->
+              <div class="user-info-text"> <!-- [AUTH INFO] Nombre y rol -->
+                <strong id="userDisplayName">Usuario</strong> <!-- [AUTH NOMBRE] Texto dinámico -->
+                <span id="userRoleBadge" class="user-role-tag">Cliente</span> <!-- [AUTH ROL] Tag de rol -->
+              </div>
+              <button type="button" id="btnCerrarSesion" class="btn-logout" aria-label="Cerrar sesión" title="Cerrar sesión"> <!-- [AUTH LOGOUT] Cierre de sesión móvil -->
+                <i class="fa-solid fa-right-from-bracket"></i> <!-- [ICONO LOGOUT] Salida -->
+              </button>
+            </div>
+          </div>
+
+          <span id="estadoRedHeader" class="estado-red-badge" role="status">🟢 En Línea</span> <!-- [RED PWA] Indicador online/offline en móvil -->
+          <button type="button" id="theme-toggle-btn-top" class="action-btn theme-btn" aria-label="Cambiar tema claro u oscuro"> <!-- [DARK MODE] Botón de tema en móvil -->
+            <i class="fa-solid fa-moon icon-moon"></i> <!-- [ICONO LUNA] Modo claro -->
+            <i class="fa-solid fa-sun icon-sun" style="display: none;"></i> <!-- [ICONO SOL] Modo oscuro -->
+          </button>
+          <button type="button" id="btnInstalarPWATop" class="btn-instalar-pwa" hidden aria-label="Instalar Aplicación VGMS"> <!-- [PWA INSTALL] Botón instalación en cabecera móvil -->
+            <i class="fa-solid fa-download"></i> <!-- [ICONO] Descarga PWA -->
+          </button>
+        </div>
+      </header>
+
+      <main class="app-main"> <!-- [MAIN SEMÁNTICO] Región principal que aloja las pestañas RBAC -->
+
+        <section id="tab-inicio" class="panel-tab active" data-roles="cliente" aria-labelledby="heading-inicio"> <!-- [SECCIÓN INICIO] Portada institucional, diferenciadores, equipo y testimonios -->
+
+          <div class="hero-card"> <!-- [HERO VGMS] Tarjeta destacada con gradiente institucional azul pizarra y borgoña -->
+            <div class="hero-brand-bar"> <!-- [HERO CABECERA] Badge técnico y membresía internacional ASIPI -->
+              <span class="hero-badge"><i class="fa-solid fa-database"></i> MySQL (XAMPP) / PWA Offline • Miembros de ASIPI</span> <!-- [BADGE] Destaca arquitectura Full Stack y membresía real -->
+              <img src="https://vgms.com.bo/wp/wp-content/uploads/2025/07/logovgms-mediano.png" alt="Logotipo oficial VGMS Abogados y Consultores S.R.L." class="hero-logo-real" width="180" height="55" loading="lazy"> <!-- [LOGO VGMS] Logotipo real extraído de vgms.com.bo/wp/ -->
+            </div>
+            <h2 id="heading-inicio" class="hero-title">VGMS Abogados &amp; Consultores S.R.L.</h2> <!-- [H2 HERO] Título institucional del estudio -->
+            <p class="hero-desc"> <!-- [HERO DESCRIPCIÓN] Texto institucional real sobre propiedad intelectual y servicios desde 2021 -->
+              Expertos en Propiedad Intelectual, Derecho Corporativo, Civil y Penal para Empresas y Emprendimientos desde 2021. Nuestros profesionales se formaron en los mejores estudios jurídicos de la región, liderados por el Dr. Francisco Vela en La Paz, Bolivia.
+            </p>
+            <div class="hero-cta-group"> <!-- [HERO CTA] Botones de navegación rápida hacia catálogo y agenda -->
+              <button type="button" class="btn btn-primary btn-go-tab" data-tab="tab-catalogo"> <!-- [NAVEGACIÓN] Lleva al catálogo filtrable de servicios -->
+                <i class="fa-solid fa-briefcase"></i> Ver Catálogo de Servicios <!-- [BOTÓN TEXTO] Acción primaria -->
+              </button>
+              <button type="button" class="btn btn-secondary btn-go-tab" data-tab="tab-agendar"> <!-- [NAVEGACIÓN] Lleva directamente al agendamiento de consulta -->
+                <i class="fa-solid fa-calendar-check"></i> Solicitar Consulta Legal <!-- [BOTÓN TEXTO] Acción secundaria -->
+              </button>
+            </div>
+          </div>
+
+          <div class="stats-row"> <!-- [ESTADÍSTICAS] Resumen de 3 bloques clave de la firma -->
+            <div class="stat-pill"> <!-- [STAT 1] Cantidad de servicios del catálogo -->
+              <strong>8 Servicios</strong> <!-- [VALOR] 8 servicios S1-S8 -->
+              <span>4 Áreas de Práctica</span> <!-- [ETIQUETA] Áreas oficiales VGMS -->
+            </div>
+            <div class="stat-pill"> <!-- [STAT 2] Experiencia del equipo -->
+              <strong>+20 Años</strong> <!-- [VALOR] Trayectoria de socios y equipo -->
+              <span>Propiedad Intelectual y Litigio</span> <!-- [ETIQUETA] Especialización -->
+            </div>
+            <div class="stat-pill"> <!-- [STAT 3] Horario de atención -->
+              <strong>09:00–18:00</strong> <!-- [VALOR] Horario hábil de consultoría -->
+              <span>Presencial y Legaltech</span> <!-- [ETIQUETA] Modalidades de atención -->
+            </div>
+          </div>
+
+          <div class="complejo-grid"> <!-- [GLASSMORPHISM GRID] Tarjetas institucionales con efecto vidrio esmerilado y aspecto 16:9 -->
+            <article class="complejo-card"> <!-- [ARTICLE 1] Diferenciadores reales de VGMS -->
+              <div class="complejo-card__media"> <!-- [CLS 16:9] Contenedor con relación fija para evitar saltos de diseño -->
+                <img src="https://vgms.com.bo/wp/wp-content/uploads/2015/04/home_03-L43-870x653.jpg" alt="Sala de reuniones y asesoría jurídica de VGMS Abogados y Consultores" class="complejo-card__img" width="480" height="270" loading="lazy"> <!-- [IMAGEN REAL] Fotografía del estudio jurídico con alt -->
+              </div>
+              <div class="complejo-card__body"> <!-- [CUERPO] Pilares diferenciales reales de VGMS -->
+                <h3>Marcamos la Diferencia en Cada Caso</h3> <!-- [H3] Subtítulo de la propuesta de valor -->
+                <p>VGMS no es una firma legal tradicional. Brindamos estrategias a medida basadas en personalización, comunicación fluida, transparencia de costos, uso de tecnología Legaltech y compromiso ético.</p> <!-- [TEXTO REAL] Síntesis de vgms.com.bo/wp/ -->
+                <div class="badge-list"> <!-- [ETIQUETAS] Los 5 pilares oficiales del estudio -->
+                  <span class="badge-item"><i class="fa-solid fa-bullseye"></i> Personalización</span> <!-- [PILAR 1] Estrategia a medida -->
+                  <span class="badge-item"><i class="fa-solid fa-comments"></i> Comunicación</span> <!-- [PILAR 2] Respuesta clara -->
+                  <span class="badge-item"><i class="fa-solid fa-file-invoice"></i> Transparencia</span> <!-- [PILAR 3] Costos claros -->
+                  <span class="badge-item"><i class="fa-solid fa-microchip"></i> Legaltech</span> <!-- [PILAR 4] Uso de tecnología -->
+                  <span class="badge-item"><i class="fa-solid fa-shield-halved"></i> Ética</span> <!-- [PILAR 5] Confidencialidad -->
+                </div>
+              </div>
+            </article>
+
+            <article class="complejo-card"> <!-- [ARTICLE 2] Cobertura regional Latam y ASIPI -->
+              <div class="complejo-card__media"> <!-- [CLS 16:9] Contenedor de imagen mapamundi VGMS -->
+                <img src="https://vgms.com.bo/wp/wp-content/uploads/2025/08/banner-mapamundi2.webp" alt="Cobertura regional en Latinoamérica y miembros ASIPI de VGMS Abogados" class="complejo-card__img" width="480" height="270" loading="lazy"> <!-- [IMAGEN REAL] Banner oficial mapamundi VGMS -->
+              </div>
+              <div class="complejo-card__body"> <!-- [CUERPO] Alcance nacional e internacional -->
+                <h3>Cobertura Nacional y Latam (ASIPI)</h3> <!-- [H3] Título de alcance regional -->
+                <p>Monitoreamos registros ante el SENAPI, constitución de sociedades en Bolivia y el extranjero, y ejecutamos medidas en frontera para detener infracciones marcarias y piratería.</p> <!-- [TEXTO REAL] Cobertura y protección activa -->
+                <div class="badge-list"> <!-- [ETIQUETAS] Servicios clave de cobertura -->
+                  <span class="badge-item"><i class="fa-solid fa-registered"></i> Registro SENAPI</span> <!-- [TAG] Gestión marcaria -->
+                  <span class="badge-item"><i class="fa-solid fa-globe"></i> Alcance Latam</span> <!-- [TAG] Cobertura regional -->
+                  <span class="badge-item"><i class="fa-solid fa-building-columns"></i> Edificio La Paz I</span> <!-- [TAG] Sede física -->
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="sub-section" style="margin-top: 24px;"> <!-- [EQUIPO LEGAL] Sección de los 5 abogados reales de VGMS -->
+            <h3 class="sub-section-title"><i class="fa-solid fa-users-gear"></i> Nuestro Equipo Legal Especializado</h3> <!-- [H3] Encabezado del equipo -->
+            <div class="team-grid"> <!-- [GRID EQUIPO] Cuadrícula responsiva para perfiles profesionales -->
+              <article class="team-card"> <!-- [ABOGADO 1] Dr. Francisco Vela -->
+                <div class="team-card__photo-wrap"> <!-- [CLS] Marco 16:9 con recorte centrado en rostro -->
+                  <img src="https://vgms.com.bo/wp/wp-content/uploads/2025/06/Francisco-Vela.jpeg" alt="Dr. Francisco Vela Director General y Socio Fundador de VGMS" class="team-card__photo" width="320" height="220" loading="lazy"> <!-- [FOTO REAL] Retrato oficial Francisco Vela -->
+                </div>
+                <div class="team-card__body"> <!-- [INFO ABOGADO] Cargo y resumen biográfico -->
+                  <h4>Dr. Francisco Vela</h4> <!-- [NOMBRE] Socio Fundador -->
+                  <span class="team-card__role">Director General • Propiedad Intelectual</span> <!-- [ESPECIALIDAD] Área principal -->
+                  <p>Abogado UNIVALLE La Paz con más de 20 años de experiencia en marcas, patentes, derechos de autor, antipiratería, derecho societario, tributario y migratorio.</p> <!-- [BIO] Resumen real -->
+                </div>
+              </article>
+
+              <article class="team-card"> <!-- [ABOGADO 2] Dr. Álvaro Maldonado -->
+                <div class="team-card__photo-wrap"> <!-- [CLS] Contenedor imagen -->
+                  <img src="https://vgms.com.bo/wp/wp-content/uploads/2025/06/Alvaro-Maldonado.jpeg" alt="Dr. Álvaro Maldonado Especialista en Derecho Corporativo en VGMS" class="team-card__photo" width="320" height="220" loading="lazy"> <!-- [FOTO REAL] Retrato oficial Álvaro Maldonado -->
+                </div>
+                <div class="team-card__body"> <!-- [INFO ABOGADO] Bio corporativa -->
+                  <h4>Dr. Álvaro Maldonado</h4> <!-- [NOMBRE] Especialista -->
+                  <span class="team-card__role">Especialista en Derecho Corporativo</span> <!-- [ESPECIALIDAD] Corporativo y gestión pública -->
+                  <p>Abogado UMSA, ex consultor BID/BOLINVEST y ex Jefe de Transparencia en Cámara de Senadores. Especialista en Gestión Pública, Derecho Administrativo y Constitucional.</p> <!-- [BIO] Resumen real -->
+                </div>
+              </article>
+
+              <article class="team-card"> <!-- [ABOGADO 3] Dr. Raúl Salta -->
+                <div class="team-card__photo-wrap"> <!-- [CLS] Contenedor imagen -->
+                  <img src="https://vgms.com.bo/wp/wp-content/uploads/2025/06/Raul-Salta.jpeg" alt="Dr. Raúl Salta Especialista en Derecho Civil y Tributario en VGMS" class="team-card__photo" width="320" height="220" loading="lazy"> <!-- [FOTO REAL] Retrato oficial Raúl Salta -->
+                </div>
+                <div class="team-card__body"> <!-- [INFO ABOGADO] Bio civil/tributaria -->
+                  <h4>Dr. Raúl Salta</h4> <!-- [NOMBRE] Especialista -->
+                  <span class="team-card__role">Especialista en Derecho Civil y Tributario</span> <!-- [ESPECIALIDAD] Civil y constitucional -->
+                  <p>Abogado UMSA con más de 23 años en gestión pública nacional, departamental y municipal; diplomados en Procedimientos Constitucionales y Derecho Tributario.</p> <!-- [BIO] Resumen real -->
+                </div>
+              </article>
+
+              <article class="team-card"> <!-- [ABOGADO 4] Dr. Juan Diego Andrade -->
+                <div class="team-card__photo-wrap"> <!-- [CLS] Contenedor imagen -->
+                  <img src="https://vgms.com.bo/wp/wp-content/uploads/2025/07/foto-Juan-Diego-Andrade.jpg" alt="Dr. Juan Diego Andrade Especialista en Derecho Civil y Legaltech en VGMS" class="team-card__photo" width="320" height="220" loading="lazy"> <!-- [FOTO REAL] Retrato oficial Juan Diego Andrade -->
+                </div>
+                <div class="team-card__body"> <!-- [INFO ABOGADO] Bio contratos y Legaltech -->
+                  <h4>Dr. Juan Diego Andrade</h4> <!-- [NOMBRE] Especialista -->
+                  <span class="team-card__role">Especialista Civil, Penal y Legaltech</span> <!-- [ESPECIALIDAD] Contratos y conciliación -->
+                  <p>Abogado UCB con formación en litigio civil y comercial, redacción contractual, negociación estratégica y herramientas digitales Legaltech para optimización de casos.</p> <!-- [BIO] Resumen real -->
+                </div>
+              </article>
+
+              <article class="team-card"> <!-- [ABOGADO 5] Dr. Paulo Ponce -->
+                <div class="team-card__photo-wrap"> <!-- [CLS] Contenedor imagen -->
+                  <img src="https://vgms.com.bo/wp/wp-content/uploads/2025/07/foto-PAULO-PONCE.jpg" alt="Dr. Paulo Ponce Especialista en Derecho Penal en VGMS" class="team-card__photo" width="320" height="220" loading="lazy"> <!-- [FOTO REAL] Retrato oficial Paulo Ponce -->
+                </div>
+                <div class="team-card__body"> <!-- [INFO ABOGADO] Bio penal -->
+                  <h4>Dr. Paulo Ponce</h4> <!-- [NOMBRE] Especialista -->
+                  <span class="team-card__role">Especialista en Derecho Penal</span> <!-- [ESPECIALIDAD] Penal y procesal penal -->
+                  <p>Abogado distinguido USFA La Paz, con trayectoria en Fiscalía Departamental en delitos patrimoniales, anticorrupción (Ley 004) y legitimación de ganancias ilícitas.</p> <!-- [BIO] Resumen real -->
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="sub-section"> <!-- [TESTIMONIOS REALES] Opiniones de clientes reales de VGMS -->
+            <h3 class="sub-section-title"><i class="fa-solid fa-quote-left"></i> Testimonios de Clientes Protegidos</h3> <!-- [H3] Encabezado testimonios -->
+            <div class="rules-grid"> <!-- [GRID TESTIMONIOS] 3 columnas responsivas -->
+              <article class="rule-card"> <!-- [TESTIMONIO 1] Willy Gómez -->
+                <i class="fa-solid fa-lightbulb"></i> <!-- [ICONO] Patentes -->
+                <h4>Willy Gómez</h4> <!-- [CLIENTE REAL] Nombre -->
+                <p>“VGMS me dio el asesoramiento que necesitaba para patentar una creación en la que estoy trabajando hace años. Fueron claros y muy comprensivos en captar la idea que tenía.”</p> <!-- [CITA REAL] Extraída de vgms.com.bo/wp/ -->
+              </article>
+              <article class="rule-card"> <!-- [TESTIMONIO 2] Vania Ramos -->
+                <i class="fa-solid fa-file-signature"></i> <!-- [ICONO] Marcas y confidencialidad -->
+                <h4>Vania Ramos</h4> <!-- [CLIENTE REAL] Nombre -->
+                <p>“Mi negocio está protegido ahora que obtuve los certificados de registro de las marcas con las que trabajo. Incluso recibí un contrato de confidencialidad para contratar personal.”</p> <!-- [CITA REAL] Extraída de vgms.com.bo/wp/ -->
+              </article>
+              <article class="rule-card"> <!-- [TESTIMONIO 3] Javier Fernández -->
+                <i class="fa-solid fa-certificate"></i> <!-- [ICONO] Registro ante SENAPI -->
+                <h4>Javier Fernández</h4> <!-- [CLIENTE REAL] Nombre -->
+                <p>“Gracias a VGMS pude registrar 4 marcas y recibir el asesoramiento técnico y estratégico necesario para que no sean rechazadas por el SENAPI.”</p> <!-- [CITA REAL] Extraída de vgms.com.bo/wp/ -->
+              </article>
+            </div>
+          </div>
+
+        </section>
+
+        <section id="tab-catalogo" class="panel-tab" data-roles="cliente" aria-labelledby="heading-catalogo"> <!-- [CATÁLOGO DE SERVICIOS] Grilla filtrable multinivel con BEM .servicio-card -->
+
+          <div class="section-header"> <!-- [CABECERA CATÁLOGO] Título, descripción y acordeón de filtros -->
+            <h2 id="heading-catalogo"><i class="fa-solid fa-briefcase"></i> Catálogo de Servicios Legales VGMS</h2> <!-- [H2] Encabezado catálogo -->
+            <p>Filtra por área de práctica, perfil de cliente o busca en vivo por servicio, SENAPI o abogado especialista.</p> <!-- [SUBTÍTULO] Instrucciones -->
+
+            <button type="button" id="toggle-catalog-btn" class="accordion-toggle-btn" aria-expanded="true"> <!-- [ACORDEÓN] Oculta o muestra controles con .slideToggle() -->
+              <span class="toggle-text"><i class="fa-solid fa-eye-slash"></i> Ocultar Controles de Filtro</span> <!-- [ACORDEÓN TEXTO] Estado inicial expandido -->
+              <i class="fa-solid fa-chevron-up toggle-icon"></i> <!-- [ACORDEÓN ICONO] Flecha rotatoria -->
+            </button>
+          </div>
+
+          <div id="catalog-collapsible-wrapper" class="filter-controls-card"> <!-- [FILTROS MULTINIVEL] Caja colapsable de búsqueda y 2 niveles de filtro -->
+
+            <div class="filter-group"> <!-- [BUSCADOR VIVO] Filtrado instantáneo por texto -->
+              <label for="searchServicio" class="filter-title"><i class="fa-solid fa-magnifying-glass"></i> Buscador Jurídico en Vivo:</label> <!-- [LABEL] Accesible para input -->
+              <input type="text" id="searchServicio" class="search-cancha-input" placeholder="Ej: Marca, SENAPI, Patente, Francisco Vela, Sociedades, Penal..."> <!-- [INPUT BUSCADOR] Evento keyup en script.js -->
+            </div>
+
+            <div class="filter-group"> <!-- [FILTRO NIVEL 1] Área de práctica jurídica -->
+              <span class="filter-title"><i class="fa-solid fa-layer-group"></i> 1. Área de Práctica Legal:</span> <!-- [TÍTULO NIVEL 1] -->
+              <div class="filter-buttons-wrapper" id="type-filter-buttons"> <!-- [BOTONES NIVEL 1] Atributo data-type evaluado en JS -->
+                <button type="button" class="filter-btn type-btn active" data-type="all">Todas las áreas</button> <!-- [FILTRO ALL] Muestra los 8 servicios -->
+                <button type="button" class="filter-btn type-btn" data-type="propiedad-intelectual"><i class="fa-solid fa-trademark"></i> Propiedad Intelectual</button> <!-- [FILTRO PI] Marcas y patentes -->
+                <button type="button" class="filter-btn type-btn" data-type="proteccion-activa"><i class="fa-solid fa-shield-halved"></i> Protección Activa</button> <!-- [FILTRO PA] Antipiratería y fronteras -->
+                <button type="button" class="filter-btn type-btn" data-type="derecho-corporativo"><i class="fa-solid fa-building"></i> Derecho Corporativo</button> <!-- [FILTRO CORP] Sociedades y administrativo -->
+                <button type="button" class="filter-btn type-btn" data-type="civil-penal"><i class="fa-solid fa-gavel"></i> Civil, Tributario y Penal</button> <!-- [FILTRO CP] Contratos, tributario y penal -->
+              </div>
+            </div>
+
+            <div class="filter-group"> <!-- [FILTRO NIVEL 2] Perfil de cliente y tipo de gestión -->
+              <span class="filter-title"><i class="fa-solid fa-sliders"></i> 2. Perfil y Enfoque de Gestión:</span> <!-- [TÍTULO NIVEL 2] -->
+              <div class="filter-buttons-wrapper" id="subtype-filter-buttons"> <!-- [BOTONES NIVEL 2] Atributo data-subtype cruzado con Nivel 1 -->
+                <button type="button" class="filter-btn subtype-btn active" data-subtype="all">Todos los perfiles</button> <!-- [SUBFILTRO ALL] Sin restricción -->
+                <button type="button" class="filter-btn subtype-btn" data-subtype="emprendimientos"><i class="fa-solid fa-rocket"></i> Startups y Emprendimientos</button> <!-- [SUBFILTRO] Startups -->
+                <button type="button" class="filter-btn subtype-btn" data-subtype="empresas"><i class="fa-solid fa-city"></i> Empresas Corporativas</button> <!-- [SUBFILTRO] Empresas -->
+                <button type="button" class="filter-btn subtype-btn" data-subtype="senapi"><i class="fa-solid fa-registered"></i> Gestión SENAPI</button> <!-- [SUBFILTRO] Trámites SENAPI -->
+                <button type="button" class="filter-btn subtype-btn" data-subtype="litigio"><i class="fa-solid fa-scale-balanced"></i> Litigio y Defensa</button> <!-- [SUBFILTRO] Juicios y defensa -->
+                <button type="button" class="filter-btn subtype-btn" data-subtype="asesoria"><i class="fa-solid fa-file-contract"></i> Asesoría y Contratos</button> <!-- [SUBFILTRO] Consultoría preventiva -->
+              </div>
+            </div>
+
+          </div>
+
+          <div class="courts-grid" id="services-container"> <!-- [CSS GRID RESPONSIVO] repeat(auto-fit, minmax(250px, 1fr)) con soporte .sim-movil -->
+
+            <article class="servicio-card" data-servicio-id="S1" data-type="propiedad-intelectual" data-subtype="empresas emprendimientos senapi"> <!-- [CARD S1] Marcas y Signos Distintivos -->
+              <span class="servicio-card__badge servicio-card__badge--pi">Propiedad Intelectual • SENAPI</span> <!-- [BADGE BEM] Categoría destacada -->
+              <div class="servicio-card__imagen-wrap"> <!-- [CLS 16:9] Contenedor sin saltos visuales -->
+                <img src="https://vgms.com.bo/wp/wp-content/uploads/2025/06/Francisco-Vela.jpeg" alt="Servicio S1 Registro de Marca y Signos Distintivos dirigido por Dr. Francisco Vela" class="servicio-card__imagen" width="480" height="270" loading="lazy"> <!-- [FOTO REAL] Especialista a cargo -->
+              </div>
+              <div class="servicio-card__cuerpo"> <!-- [CUERPO BEM] Información del servicio jurídico -->
+                <h4 class="servicio-card__titulo">S1: Registro de Marca y Signos Distintivos</h4> <!-- [TÍTULO BEM] Nombre de servicio -->
+                <p class="servicio-card__desc">Planificación estratégica, búsqueda de anterioridad, registro ante SENAPI y vigilancia continua de signos distintivos para blindar la identidad de tu negocio.</p> <!-- [DESC BEM] Basado en vgms.com.bo -->
+                <div class="servicio-card__tags"> <!-- [TAGS BEM] Metadatos clave -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-user-tie"></i> Dr. Francisco Vela</span> <!-- [TAG] Especialista -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-registered"></i> Trámite SENAPI</span> <!-- [TAG] Entidad -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-radar"></i> Monitoreo 24/7</span> <!-- [TAG] Tecnología -->
+                </div>
+                <div class="servicio-card__pie"> <!-- [PIE BEM] Honorario base y botones de acción -->
+                  <div class="servicio-card__precio"> <!-- [PRECIO BEM] Honorario sincronizado con MySQL -->
+                    <span class="servicio-card__precio-val" id="precio-card-S1">1800 Bs</span> <!-- [MONTO] Actualizable desde Admin -->
+                    <span class="servicio-card__precio-tiempo">/ gestión base</span> <!-- [UNIDAD] Modalidad honorario -->
+                  </div>
+                  <div class="servicio-card__acciones"> <!-- [ACCIONES BEM] Botones delegados en #services-container -->
+                    <button type="button" class="servicio-card__boton btn-admin-servicio" data-service-id="S1" style="display: none;" title="Editar honorario o estado (Rol Admin)"> <!-- [RBAC ADMIN] Visible solo a Socio Director -->
+                      <i class="fa-solid fa-gear"></i> <!-- [ICONO] Configuración -->
+                    </button>
+                    <button type="button" class="servicio-card__boton btn-simular" aria-label="Destacar o comparar servicio S1"> <!-- [SIMULAR] Alterna clase .servicio-card--activa -->
+                      <i class="fa-solid fa-bookmark"></i> Comparar <!-- [BOTÓN TEXTO] Comparación rápida -->
+                    </button>
+                    <button type="button" class="servicio-card__boton servicio-card__boton--destacado btn-select-service" data-service-id="S1" data-service-name="S1: Registro de Marca y Signos Distintivos" data-service-price="1800"> <!-- [SELECCIONAR] Preselecciona S1 y navega a tab-agendar -->
+                      Agendar <!-- [BOTÓN TEXTO] CTA principal -->
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="servicio-card" data-servicio-id="S2" data-type="propiedad-intelectual" data-subtype="empresas emprendimientos senapi"> <!-- [CARD S2] Patentes y Derechos de Autor -->
+              <span class="servicio-card__badge servicio-card__badge--pi">Propiedad Intelectual • Patentes</span> <!-- [BADGE BEM] -->
+              <div class="servicio-card__imagen-wrap"> <!-- [CLS 16:9] -->
+                <img src="https://vgms.com.bo/wp/wp-content/uploads/2015/04/home_03-L43-870x653.jpg" alt="Servicio S2 Patentes de Invención y Derechos de Autor en VGMS Abogados" class="servicio-card__imagen" width="480" height="270" loading="lazy"> <!-- [FOTO REAL] -->
+              </div>
+              <div class="servicio-card__cuerpo"> <!-- [CUERPO BEM] -->
+                <h4 class="servicio-card__titulo">S2: Patentes de Invención y Derechos de Autor</h4> <!-- [TÍTULO BEM] -->
+                <p class="servicio-card__desc">Protección legal integral de invenciones industriales, modelos de utilidad, software, obras creativas y derechos conexos bajo normativa nacional e internacional.</p> <!-- [DESC BEM] -->
+                <div class="servicio-card__tags"> <!-- [TAGS BEM] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-user-tie"></i> Dr. Francisco Vela</span> <!-- [TAG] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-lightbulb"></i> Patentes</span> <!-- [TAG] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-copyright"></i> Derechos de Autor</span> <!-- [TAG] -->
+                </div>
+                <div class="servicio-card__pie"> <!-- [PIE BEM] -->
+                  <div class="servicio-card__precio"> <!-- [PRECIO BEM] -->
+                    <span class="servicio-card__precio-val" id="precio-card-S2">2500 Bs</span> <!-- [MONTO] -->
+                    <span class="servicio-card__precio-tiempo">/ gestión base</span> <!-- [UNIDAD] -->
+                  </div>
+                  <div class="servicio-card__acciones"> <!-- [ACCIONES BEM] -->
+                    <button type="button" class="servicio-card__boton btn-admin-servicio" data-service-id="S2" style="display: none;" title="Editar honorario o estado (Rol Admin)"> <!-- [RBAC ADMIN] -->
+                      <i class="fa-solid fa-gear"></i> <!-- [ICONO] -->
+                    </button>
+                    <button type="button" class="servicio-card__boton btn-simular" aria-label="Destacar o comparar servicio S2"> <!-- [SIMULAR] -->
+                      <i class="fa-solid fa-bookmark"></i> Comparar <!-- [TEXTO] -->
+                    </button>
+                    <button type="button" class="servicio-card__boton servicio-card__boton--destacado btn-select-service" data-service-id="S2" data-service-name="S2: Patentes de Invención y Derechos de Autor" data-service-price="2500"> <!-- [SELECCIONAR] -->
+                      Agendar <!-- [TEXTO] -->
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="servicio-card" data-servicio-id="S3" data-type="proteccion-activa" data-subtype="empresas litigio senapi"> <!-- [CARD S3] Protección Activa -->
+              <span class="servicio-card__badge servicio-card__badge--activa">Protección Activa • Fronteras</span> <!-- [BADGE BEM] -->
+              <div class="servicio-card__imagen-wrap"> <!-- [CLS 16:9] -->
+                <img src="https://vgms.com.bo/wp/wp-content/uploads/2025/08/banner-mapamundi2.webp" alt="Servicio S3 Protección Activa y Medidas en Frontera contra piratería" class="servicio-card__imagen" width="480" height="270" loading="lazy"> <!-- [FOTO REAL] -->
+              </div>
+              <div class="servicio-card__cuerpo"> <!-- [CUERPO BEM] -->
+                <h4 class="servicio-card__titulo">S3: Protección Activa y Medidas en Frontera</h4> <!-- [TÍTULO BEM] -->
+                <p class="servicio-card__desc">Estrategias ágiles para frenar infracciones marcarias y piratería de productos o servicios mediante acciones en frontera, mercado interno y litigios marcarios.</p> <!-- [DESC BEM] -->
+                <div class="servicio-card__tags"> <!-- [TAGS BEM] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-user-tie"></i> Dr. Francisco Vela</span> <!-- [TAG] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-shield-halved"></i> Antipiratería</span> <!-- [TAG] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-gavel"></i> Litigio Marcario</span> <!-- [TAG] -->
+                </div>
+                <div class="servicio-card__pie"> <!-- [PIE BEM] -->
+                  <div class="servicio-card__precio"> <!-- [PRECIO BEM] -->
+                    <span class="servicio-card__precio-val" id="precio-card-S3">2200 Bs</span> <!-- [MONTO] -->
+                    <span class="servicio-card__precio-tiempo">/ gestión base</span> <!-- [UNIDAD] -->
+                  </div>
+                  <div class="servicio-card__acciones"> <!-- [ACCIONES BEM] -->
+                    <button type="button" class="servicio-card__boton btn-admin-servicio" data-service-id="S3" style="display: none;" title="Editar honorario o estado (Rol Admin)"> <!-- [RBAC ADMIN] -->
+                      <i class="fa-solid fa-gear"></i> <!-- [ICONO] -->
+                    </button>
+                    <button type="button" class="servicio-card__boton btn-simular" aria-label="Destacar o comparar servicio S3"> <!-- [SIMULAR] -->
+                      <i class="fa-solid fa-bookmark"></i> Comparar <!-- [TEXTO] -->
+                    </button>
+                    <button type="button" class="servicio-card__boton servicio-card__boton--destacado btn-select-service" data-service-id="S3" data-service-name="S3: Protección Activa y Medidas en Frontera" data-service-price="2200"> <!-- [SELECCIONAR] -->
+                      Agendar <!-- [TEXTO] -->
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="servicio-card" data-servicio-id="S4" data-type="derecho-corporativo" data-subtype="empresas emprendimientos asesoria"> <!-- [CARD S4] Sociedades y Corporativo -->
+              <span class="servicio-card__badge servicio-card__badge--corp">Derecho Corporativo</span> <!-- [BADGE BEM] -->
+              <div class="servicio-card__imagen-wrap"> <!-- [CLS 16:9] -->
+                <img src="https://vgms.com.bo/wp/wp-content/uploads/2025/06/Alvaro-Maldonado.jpeg" alt="Servicio S4 Constitución de Sociedades y Derecho Corporativo dirigido por Dr. Álvaro Maldonado" class="servicio-card__imagen" width="480" height="270" loading="lazy"> <!-- [FOTO REAL] -->
+              </div>
+              <div class="servicio-card__cuerpo"> <!-- [CUERPO BEM] -->
+                <h4 class="servicio-card__titulo">S4: Constitución de Sociedades y Corporativo</h4> <!-- [TÍTULO BEM] -->
+                <p class="servicio-card__desc">Asesoramiento desde la creación y constitución de S.R.L. o S.A. a nivel nacional e internacional, gobierno societario y gestión de conflictos comerciales.</p> <!-- [DESC BEM] -->
+                <div class="servicio-card__tags"> <!-- [TAGS BEM] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-user-tie"></i> Dr. Álvaro Maldonado</span> <!-- [TAG] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-building"></i> S.R.L. / S.A.</span> <!-- [TAG] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-globe"></i> Societario</span> <!-- [TAG] -->
+                </div>
+                <div class="servicio-card__pie"> <!-- [PIE BEM] -->
+                  <div class="servicio-card__precio"> <!-- [PRECIO BEM] -->
+                    <span class="servicio-card__precio-val" id="precio-card-S4">2400 Bs</span> <!-- [MONTO] -->
+                    <span class="servicio-card__precio-tiempo">/ gestión base</span> <!-- [UNIDAD] -->
+                  </div>
+                  <div class="servicio-card__acciones"> <!-- [ACCIONES BEM] -->
+                    <button type="button" class="servicio-card__boton btn-admin-servicio" data-service-id="S4" style="display: none;" title="Editar honorario o estado (Rol Admin)"> <!-- [RBAC ADMIN] -->
+                      <i class="fa-solid fa-gear"></i> <!-- [ICONO] -->
+                    </button>
+                    <button type="button" class="servicio-card__boton btn-simular" aria-label="Destacar o comparar servicio S4"> <!-- [SIMULAR] -->
+                      <i class="fa-solid fa-bookmark"></i> Comparar <!-- [TEXTO] -->
+                    </button>
+                    <button type="button" class="servicio-card__boton servicio-card__boton--destacado btn-select-service" data-service-id="S4" data-service-name="S4: Constitución de Sociedades y Corporativo" data-service-price="2400"> <!-- [SELECCIONAR] -->
+                      Agendar <!-- [TEXTO] -->
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="servicio-card" data-servicio-id="S5" data-type="derecho-corporativo" data-subtype="empresas asesoria"> <!-- [CARD S5] Administrativo y Contrataciones -->
+              <span class="servicio-card__badge servicio-card__badge--corp">Corporativo • Sector Público</span> <!-- [BADGE BEM] -->
+              <div class="servicio-card__imagen-wrap"> <!-- [CLS 16:9] -->
+                <img src="https://vgms.com.bo/wp/wp-content/uploads/2015/04/home_03-L43-768x576.jpg" alt="Servicio S5 Derecho Administrativo y Contrataciones Públicas en VGMS Abogados" class="servicio-card__imagen" width="480" height="270" loading="lazy"> <!-- [FOTO REAL] -->
+              </div>
+              <div class="servicio-card__cuerpo"> <!-- [CUERPO BEM] -->
+                <h4 class="servicio-card__titulo">S5: Derecho Administrativo y Contrataciones</h4> <!-- [TÍTULO BEM] -->
+                <p class="servicio-card__desc">Patrocinio en contratación pública y privada, procedimientos administrativos, aduanas, transparencia y asesoramiento regulatorio ante instituciones estatales.</p> <!-- [DESC BEM] -->
+                <div class="servicio-card__tags"> <!-- [TAGS BEM] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-user-tie"></i> Dr. Álvaro Maldonado</span> <!-- [TAG] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-landmark"></i> Contratación Pública</span> <!-- [TAG] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-stamp"></i> Regulatorio</span> <!-- [TAG] -->
+                </div>
+                <div class="servicio-card__pie"> <!-- [PIE BEM] -->
+                  <div class="servicio-card__precio"> <!-- [PRECIO BEM] -->
+                    <span class="servicio-card__precio-val" id="precio-card-S5">1900 Bs</span> <!-- [MONTO] -->
+                    <span class="servicio-card__precio-tiempo">/ gestión base</span> <!-- [UNIDAD] -->
+                  </div>
+                  <div class="servicio-card__acciones"> <!-- [ACCIONES BEM] -->
+                    <button type="button" class="servicio-card__boton btn-admin-servicio" data-service-id="S5" style="display: none;" title="Editar honorario o estado (Rol Admin)"> <!-- [RBAC ADMIN] -->
+                      <i class="fa-solid fa-gear"></i> <!-- [ICONO] -->
+                    </button>
+                    <button type="button" class="servicio-card__boton btn-simular" aria-label="Destacar o comparar servicio S5"> <!-- [SIMULAR] -->
+                      <i class="fa-solid fa-bookmark"></i> Comparar <!-- [TEXTO] -->
+                    </button>
+                    <button type="button" class="servicio-card__boton servicio-card__boton--destacado btn-select-service" data-service-id="S5" data-service-name="S5: Derecho Administrativo y Contrataciones" data-service-price="1900"> <!-- [SELECCIONAR] -->
+                      Agendar <!-- [TEXTO] -->
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="servicio-card" data-servicio-id="S6" data-type="civil-penal" data-subtype="empresas emprendimientos asesoria"> <!-- [CARD S6] Contratos y Legaltech -->
+              <span class="servicio-card__badge servicio-card__badge--civil">Civil • Contratos &amp; Legaltech</span> <!-- [BADGE BEM] -->
+              <div class="servicio-card__imagen-wrap"> <!-- [CLS 16:9] -->
+                <img src="https://vgms.com.bo/wp/wp-content/uploads/2025/07/foto-Juan-Diego-Andrade.jpg" alt="Servicio S6 Contratos Civiles, Conciliación y Legaltech dirigido por Dr. Juan Diego Andrade" class="servicio-card__imagen" width="480" height="270" loading="lazy"> <!-- [FOTO REAL] -->
+              </div>
+              <div class="servicio-card__cuerpo"> <!-- [CUERPO BEM] -->
+                <h4 class="servicio-card__titulo">S6: Contratos Civiles, Conciliación y Legaltech</h4> <!-- [TÍTULO BEM] -->
+                <p class="servicio-card__desc">Redacción y revisión de contratos de confidencialidad (NDA), comerciales y civiles, procesos monitorios, conciliación estratégica y soluciones Legaltech.</p> <!-- [DESC BEM] -->
+                <div class="servicio-card__tags"> <!-- [TAGS BEM] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-user-tie"></i> Dr. J. Diego Andrade</span> <!-- [TAG] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-file-signature"></i> Contratos &amp; NDA</span> <!-- [TAG] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-handshake"></i> Conciliación</span> <!-- [TAG] -->
+                </div>
+                <div class="servicio-card__pie"> <!-- [PIE BEM] -->
+                  <div class="servicio-card__precio"> <!-- [PRECIO BEM] -->
+                    <span class="servicio-card__precio-val" id="precio-card-S6">1200 Bs</span> <!-- [MONTO] -->
+                    <span class="servicio-card__precio-tiempo">/ gestión base</span> <!-- [UNIDAD] -->
+                  </div>
+                  <div class="servicio-card__acciones"> <!-- [ACCIONES BEM] -->
+                    <button type="button" class="servicio-card__boton btn-admin-servicio" data-service-id="S6" style="display: none;" title="Editar honorario o estado (Rol Admin)"> <!-- [RBAC ADMIN] -->
+                      <i class="fa-solid fa-gear"></i> <!-- [ICONO] -->
+                    </button>
+                    <button type="button" class="servicio-card__boton btn-simular" aria-label="Destacar o comparar servicio S6"> <!-- [SIMULAR] -->
+                      <i class="fa-solid fa-bookmark"></i> Comparar <!-- [TEXTO] -->
+                    </button>
+                    <button type="button" class="servicio-card__boton servicio-card__boton--destacado btn-select-service" data-service-id="S6" data-service-name="S6: Contratos Civiles, Conciliación y Legaltech" data-service-price="1200"> <!-- [SELECCIONAR] -->
+                      Agendar <!-- [TEXTO] -->
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="servicio-card" data-servicio-id="S7" data-type="civil-penal" data-subtype="empresas asesoria litigio"> <!-- [CARD S7] Constitucional y Tributario -->
+              <span class="servicio-card__badge servicio-card__badge--civil">Civil • Constitucional &amp; Tributario</span> <!-- [BADGE BEM] -->
+              <div class="servicio-card__imagen-wrap"> <!-- [CLS 16:9] -->
+                <img src="https://vgms.com.bo/wp/wp-content/uploads/2025/06/Raul-Salta.jpeg" alt="Servicio S7 Derecho Constitucional, Tributario y Autonómico dirigido por Dr. Raúl Salta" class="servicio-card__imagen" width="480" height="270" loading="lazy"> <!-- [FOTO REAL] -->
+              </div>
+              <div class="servicio-card__cuerpo"> <!-- [CUERPO BEM] -->
+                <h4 class="servicio-card__titulo">S7: Derecho Constitucional, Tributario y Municipal</h4> <!-- [TÍTULO BEM] -->
+                <p class="servicio-card__desc">Defensa y asesoramiento especializado en acciones constitucionales, derecho tributario empresarial, régimen autonómico y normativa municipal boliviana.</p> <!-- [DESC BEM] -->
+                <div class="servicio-card__tags"> <!-- [TAGS BEM] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-user-tie"></i> Dr. Raúl Salta</span> <!-- [TAG] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-scale-balanced"></i> Constitucional</span> <!-- [TAG] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-coins"></i> Tributario</span> <!-- [TAG] -->
+                </div>
+                <div class="servicio-card__pie"> <!-- [PIE BEM] -->
+                  <div class="servicio-card__precio"> <!-- [PRECIO BEM] -->
+                    <span class="servicio-card__precio-val" id="precio-card-S7">1600 Bs</span> <!-- [MONTO] -->
+                    <span class="servicio-card__precio-tiempo">/ gestión base</span> <!-- [UNIDAD] -->
+                  </div>
+                  <div class="servicio-card__acciones"> <!-- [ACCIONES BEM] -->
+                    <button type="button" class="servicio-card__boton btn-admin-servicio" data-service-id="S7" style="display: none;" title="Editar honorario o estado (Rol Admin)"> <!-- [RBAC ADMIN] -->
+                      <i class="fa-solid fa-gear"></i> <!-- [ICONO] -->
+                    </button>
+                    <button type="button" class="servicio-card__boton btn-simular" aria-label="Destacar o comparar servicio S7"> <!-- [SIMULAR] -->
+                      <i class="fa-solid fa-bookmark"></i> Comparar <!-- [TEXTO] -->
+                    </button>
+                    <button type="button" class="servicio-card__boton servicio-card__boton--destacado btn-select-service" data-service-id="S7" data-service-name="S7: Derecho Constitucional, Tributario y Municipal" data-service-price="1600"> <!-- [SELECCIONAR] -->
+                      Agendar <!-- [TEXTO] -->
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="servicio-card" data-servicio-id="S8" data-type="civil-penal" data-subtype="litigio empresas"> <!-- [CARD S8] Defensa Penal -->
+              <span class="servicio-card__badge servicio-card__badge--penal">Derecho Penal • Litigio</span> <!-- [BADGE BEM] -->
+              <div class="servicio-card__imagen-wrap"> <!-- [CLS 16:9] -->
+                <img src="https://vgms.com.bo/wp/wp-content/uploads/2025/07/foto-PAULO-PONCE.jpg" alt="Servicio S8 Defensa Penal Estratégica y Ley 004 dirigido por Dr. Paulo Ponce" class="servicio-card__imagen" width="480" height="270" loading="lazy"> <!-- [FOTO REAL] -->
+              </div>
+              <div class="servicio-card__cuerpo"> <!-- [CUERPO BEM] -->
+                <h4 class="servicio-card__titulo">S8: Defensa Penal Estratégica y Ley 004</h4> <!-- [TÍTULO BEM] -->
+                <p class="servicio-card__desc">Patrocinio penal integral ante Fiscalía y tribunales en delitos patrimoniales, legitimación de ganancias ilícitas, cumplimiento corporativo y Ley 004.</p> <!-- [DESC BEM] -->
+                <div class="servicio-card__tags"> <!-- [TAGS BEM] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-user-tie"></i> Dr. Paulo Ponce</span> <!-- [TAG] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-gavel"></i> Procesal Penal</span> <!-- [TAG] -->
+                  <span class="servicio-card__tag"><i class="fa-solid fa-shield-halved"></i> Defensa Activa</span> <!-- [TAG] -->
+                </div>
+                <div class="servicio-card__pie"> <!-- [PIE BEM] -->
+                  <div class="servicio-card__precio"> <!-- [PRECIO BEM] -->
+                    <span class="servicio-card__precio-val" id="precio-card-S8">2100 Bs</span> <!-- [MONTO] -->
+                    <span class="servicio-card__precio-tiempo">/ gestión base</span> <!-- [UNIDAD] -->
+                  </div>
+                  <div class="servicio-card__acciones"> <!-- [ACCIONES BEM] -->
+                    <button type="button" class="servicio-card__boton btn-admin-servicio" data-service-id="S8" style="display: none;" title="Editar honorario o estado (Rol Admin)"> <!-- [RBAC ADMIN] -->
+                      <i class="fa-solid fa-gear"></i> <!-- [ICONO] -->
+                    </button>
+                    <button type="button" class="servicio-card__boton btn-simular" aria-label="Destacar o comparar servicio S8"> <!-- [SIMULAR] -->
+                      <i class="fa-solid fa-bookmark"></i> Comparar <!-- [TEXTO] -->
+                    </button>
+                    <button type="button" class="servicio-card__boton servicio-card__boton--destacado btn-select-service" data-service-id="S8" data-service-name="S8: Defensa Penal Estratégica y Ley 004" data-service-price="2100"> <!-- [SELECCIONAR] -->
+                      Agendar <!-- [TEXTO] -->
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+        </section>
+
+        <section id="tab-agendar" class="panel-tab" data-roles="cliente" aria-labelledby="heading-agendar"> <!-- [SECCIÓN AGENDAR] Agendamiento con disponibilidad horaria y validación estricta -->
+
+          <div class="section-header"> <!-- [CABECERA AGENDAR] -->
+            <h2 id="heading-agendar"><i class="fa-solid fa-calendar-days"></i> Agendar Consulta Jurídica en VGMS</h2> <!-- [H2] -->
+            <p>Selecciona la fecha, el servicio legal, el bloque horario disponible y completa los datos del titular.</p> <!-- [SUBTÍTULO] -->
+          </div>
+
+          <div id="seccionCancelarConsulta" class="active-reservations-bar" style="display: none;"> <!-- [BARRA CONDICIONAL] Visible solo cuando hay consultas activas -->
+            <div class="active-res-info"> <!-- [INFO ACTIVA] -->
+              <i class="fa-solid fa-circle-check"></i> <!-- [ICONO] -->
+              <span>Tienes <strong id="cant-consultas-activas">0</strong> consulta(s) activa(s) en VGMS Abogados.</span> <!-- [CONTADOR] Actualizado vía JS -->
+            </div>
+            <button type="button" id="btn-cancelar-consulta-activa" class="btn-cancel-reservation"> <!-- [CANCELACIÓN RÁPIDA] Anula última consulta activa -->
+              <i class="fa-solid fa-calendar-xmark"></i> Cancelar Última Consulta <!-- [TEXTO] -->
+            </button>
+          </div>
+
+          <div class="booking-grid-wrapper"> <!-- [GRID AGENDA] 1 columna móvil -> 2 columnas desktop -->
+
+            <div class="booking-schedule-card"> <!-- [COLUMNA 1] Fecha, servicio y bloques horarios -->
+              <h3><i class="fa-solid fa-clock"></i> 1. Fecha, Especialidad y Horario</h3> <!-- [H3] -->
+              <p class="schedule-subtitle">Elige la fecha y selecciona los bloques de atención jurídica disponibles:</p> <!-- [SUBTÍTULO] -->
+
+              <div class="form-row-single"> <!-- [FECHA] Input date con restricción min=hoy y max=+30 días -->
+                <label for="fecha-consulta">Fecha de la consulta (máx. 30 días):</label> <!-- [LABEL] -->
+                <input type="date" id="fecha-consulta" name="fecha-consulta"> <!-- [INPUT FECHA] -->
+                <span class="field-error" id="err-date" style="display: none;"></span> <!-- [ERROR FECHA] Mensaje dinámico -->
+              </div>
+
+              <div class="form-row-single"> <!-- [SELECTOR SERVICIO] Dropdown sincronizado con MySQL y catálogo -->
+                <label for="select-servicio-consulta">Servicio Jurídico (S1 - S8):</label> <!-- [LABEL] -->
+                <select id="select-servicio-consulta"> <!-- [SELECT] Opciones con atributo data-precio -->
+                  <option value="S1" data-precio="1800" selected>S1: Registro de Marca y Signos Distintivos (1800 Bs)</option> <!-- [OPCIÓN S1] -->
+                  <option value="S2" data-precio="2500">S2: Patentes de Invención y Derechos de Autor (2500 Bs)</option> <!-- [OPCIÓN S2] -->
+                  <option value="S3" data-precio="2200">S3: Protección Activa y Medidas en Frontera (2200 Bs)</option> <!-- [OPCIÓN S3] -->
+                  <option value="S4" data-precio="2400">S4: Constitución de Sociedades y Corporativo (2400 Bs)</option> <!-- [OPCIÓN S4] -->
+                  <option value="S5" data-precio="1900">S5: Derecho Administrativo y Contrataciones (1900 Bs)</option> <!-- [OPCIÓN S5] -->
+                  <option value="S6" data-precio="1200">S6: Contratos Civiles, Conciliación y Legaltech (1200 Bs)</option> <!-- [OPCIÓN S6] -->
+                  <option value="S7" data-precio="1600">S7: Derecho Constitucional, Tributario y Municipal (1600 Bs)</option> <!-- [OPCIÓN S7] -->
+                  <option value="S8" data-precio="2100">S8: Defensa Penal Estratégica y Ley 004 (2100 Bs)</option> <!-- [OPCIÓN S8] -->
+                </select>
+              </div>
+
+              <span class="schedule-block-title">Turnos de atención jurídica (bloques de 1 hora):</span> <!-- [TÍTULO BLOQUES] -->
+              <div class="time-slots-grid" id="turnos-grid"> <!-- [GRILLA TURNOS] Botones con clase dinámica .ocupado en rojo -->
+                <button type="button" class="btn-slot" data-inicio="9" data-fin="10">09:00 - 10:00</button> <!-- [SLOT 09] -->
+                <button type="button" class="btn-slot" data-inicio="10" data-fin="11">10:00 - 11:00</button> <!-- [SLOT 10] -->
+                <button type="button" class="btn-slot" data-inicio="11" data-fin="12">11:00 - 12:00</button> <!-- [SLOT 11] -->
+                <button type="button" class="btn-slot" data-inicio="12" data-fin="13">12:00 - 13:00</button> <!-- [SLOT 12] -->
+                <button type="button" class="btn-slot" data-inicio="14" data-fin="15">14:00 - 15:00</button> <!-- [SLOT 14] -->
+                <button type="button" class="btn-slot" data-inicio="15" data-fin="16">15:00 - 16:00</button> <!-- [SLOT 15] -->
+                <button type="button" class="btn-slot" data-inicio="16" data-fin="17">16:00 - 17:00</button> <!-- [SLOT 16] -->
+                <button type="button" class="btn-slot" data-inicio="17" data-fin="18">17:00 - 18:00</button> <!-- [SLOT 17] -->
+                <button type="button" class="btn-slot" data-inicio="18" data-fin="19">18:00 - 19:00</button> <!-- [SLOT 18] -->
+              </div>
+
+              <div class="custom-range-box"> <!-- [RANGO CONTINUO] Selección multi-hora validada contra colisiones -->
+                <h4>O define un horario continuo de reunión:</h4> <!-- [H4] -->
+                <div class="range-inputs-group"> <!-- [SELECTORES HORA] -->
+                  <div class="input-item"> <!-- [HORA INICIO] -->
+                    <label for="select-inicio">Hora Inicio:</label> <!-- [LABEL] -->
+                    <select id="select-inicio"> <!-- [SELECT INICIO] -->
+                      <option value="9">09:00</option> <!-- [09:00] -->
+                      <option value="10" selected>10:00</option> <!-- [10:00] -->
+                      <option value="11">11:00</option> <!-- [11:00] -->
+                      <option value="12">12:00</option> <!-- [12:00] -->
+                      <option value="14">14:00</option> <!-- [14:00] -->
+                      <option value="15">15:00</option> <!-- [15:00] -->
+                      <option value="16">16:00</option> <!-- [16:00] -->
+                      <option value="17">17:00</option> <!-- [17:00] -->
+                      <option value="18">18:00</option> <!-- [18:00] -->
+                    </select>
+                  </div>
+                  <div class="input-item"> <!-- [HORA FIN] -->
+                    <label for="select-fin">Hora Fin:</label> <!-- [LABEL] -->
+                    <select id="select-fin"> <!-- [SELECT FIN] -->
+                      <option value="10">10:00</option> <!-- [10:00] -->
+                      <option value="11" selected>11:00</option> <!-- [11:00] -->
+                      <option value="12">12:00</option> <!-- [12:00] -->
+                      <option value="13">13:00</option> <!-- [13:00] -->
+                      <option value="15">15:00</option> <!-- [15:00] -->
+                      <option value="16">16:00</option> <!-- [16:00] -->
+                      <option value="17">17:00</option> <!-- [17:00] -->
+                      <option value="18">18:00</option> <!-- [18:00] -->
+                      <option value="19">19:00</option> <!-- [19:00] -->
+                    </select>
+                  </div>
+                </div>
+                <span class="field-error" id="err-hours" style="display: none; margin-top: 8px;"></span> <!-- [ERROR HORAS] -->
+              </div>
+
+            </div>
+
+            <div class="booking-form-card"> <!-- [COLUMNA 2] Formulario titular con validación estricta y resumen en vivo -->
+              <h3><i class="fa-solid fa-file-invoice-dollar"></i> 2. Datos del Cliente y Resumen</h3> <!-- [H3] -->
+              <p class="form-instructions">Ingresa tus datos legítimos para registrar la consulta legal:</p> <!-- [SUBTÍTULO] -->
+
+              <form id="consultation-form" action="#agendar" method="POST" novalidate> <!-- [FORMULARIO] Validación JS controlada -->
+
+                <div class="form-group"> <!-- [VALIDACIÓN NOMBRE] ≥2 palabras, solo letras, sin blacklist ni repetidos -->
+                  <label for="client-name"><i class="fa-solid fa-user"></i> Nombre Completo:</label> <!-- [LABEL] -->
+                  <input type="text" id="client-name" name="client-name" placeholder="Ej: Vania Ramos Fernández" autocomplete="name"> <!-- [INPUT NOMBRE] -->
+                  <span class="field-error" id="err-name" style="display: none;"></span> <!-- [ERROR NOMBRE] -->
+                </div>
+
+                <div class="form-group"> <!-- [VALIDACIÓN TELÉFONO] Exactamente 8 dígitos bolivianos iniciando en 6 o 7 -->
+                  <label for="client-phone"><i class="fa-solid fa-phone"></i> Celular / WhatsApp:</label> <!-- [LABEL] -->
+                  <input type="tel" id="client-phone" name="client-phone" placeholder="Ej: 67005417" maxlength="8" inputmode="numeric" autocomplete="tel"> <!-- [INPUT TELÉFONO] -->
+                  <span class="field-error" id="err-phone" style="display: none;"></span> <!-- [ERROR TELÉFONO] -->
+                </div>
+
+                <div class="form-group"> <!-- [VALIDACIÓN EMAIL] Formato + lista blanca de dominios reales -->
+                  <label for="client-email"><i class="fa-solid fa-envelope"></i> Correo Electrónico:</label> <!-- [LABEL] -->
+                  <input type="email" id="client-email" name="client-email" placeholder="cliente@gmail.com" autocomplete="email"> <!-- [INPUT EMAIL] -->
+                  <span class="field-error" id="err-email" style="display: none;"></span> <!-- [ERROR EMAIL] -->
+                </div>
+
+                <div class="form-group"> <!-- [MODALIDAD] Presencial en Edificio La Paz I o Legaltech -->
+                  <label for="legal-modality"><i class="fa-solid fa-video"></i> Modalidad de Consulta:</label> <!-- [LABEL] -->
+                  <select id="legal-modality" name="legal-modality"> <!-- [SELECT MODALIDAD] -->
+                    <option value="Presencial (Edificio La Paz I)">Presencial — Av. Arce esq. Campos, Edif. La Paz I</option> <!-- [OPCIÓN 1] -->
+                    <option value="Videollamada Legaltech">Electrónica / Videollamada Legaltech</option> <!-- [OPCIÓN 2] -->
+                    <option value="Auditoría Corporativa In-Situ">Auditoría Corporativa en Empresa</option> <!-- [OPCIÓN 3] -->
+                  </select>
+                </div>
+
+                <div class="form-group"> <!-- [FORMA DE PAGO] Opciones reales de facturación -->
+                  <label for="payment-method"><i class="fa-solid fa-credit-card"></i> Forma de Pago de Honorarios:</label> <!-- [LABEL] -->
+                  <select id="payment-method" name="payment-method"> <!-- [SELECT PAGO] -->
+                    <option value="qr">Pago QR Simple Empresarial</option> <!-- [OPCIÓN 1] -->
+                    <option value="transferencia">Transferencia Bancaria Corporativa</option> <!-- [OPCIÓN 2] -->
+                    <option value="oficina">Pago en Despacho VGMS (La Paz)</option> <!-- [OPCIÓN 3] -->
+                  </select>
+                </div>
+
+                <div class="form-group"> <!-- [ADICIONALES] Gestiones complementarias sumadas al honorario -->
+                  <span class="filter-title"><i class="fa-solid fa-plus-circle"></i> Gestiones Complementarias:</span> <!-- [TÍTULO] -->
+                  <div class="checkboxes-wrapper"> <!-- [CHECKBOXES] -->
+                    <label class="checkbox-label" for="add-senapi"> <!-- [ADICIONAL 1] -->
+                      <input type="checkbox" id="add-senapi" name="add-senapi" value="250"> Búsqueda de Anterioridad ante SENAPI (+250 Bs) <!-- [VALOR 250] -->
+                    </label>
+                    <label class="checkbox-label" for="add-nda"> <!-- [ADICIONAL 2] -->
+                      <input type="checkbox" id="add-nda" name="add-nda" value="350"> Redacción / Revisión de Contrato NDA (+350 Bs) <!-- [VALOR 350] -->
+                    </label>
+                    <label class="checkbox-label" for="add-notarial"> <!-- [ADICIONAL 3] -->
+                      <input type="checkbox" id="add-notarial" name="add-notarial" value="200"> Certificación Notarial y Legalización (+200 Bs) <!-- [VALOR 200] -->
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group"> <!-- [NOTAS] Resumen confidencial del caso -->
+                  <label for="client-notes"><i class="fa-solid fa-comment-dots"></i> Resumen breve del caso o consulta:</label> <!-- [LABEL] -->
+                  <textarea id="client-notes" name="client-notes" rows="2" placeholder="Ej: Registro de 2 signos distintivos y contrato de confidencialidad..."></textarea> <!-- [TEXTAREA] -->
+                </div>
+
+                <div class="reservation-summary-panel"> <!-- [RESUMEN EN VIVO] Panel reactivo de honorarios -->
+                  <div class="summary-line"> <!-- [FILA 1] -->
+                    <span>Servicio seleccionado:</span> <!-- [ETIQUETA] -->
+                    <strong id="summary-service">S1: Registro de Marca y Signos Distintivos</strong> <!-- [VALOR] -->
+                  </div>
+                  <div class="summary-line"> <!-- [FILA 2] -->
+                    <span>Duración de sesión:</span> <!-- [ETIQUETA] -->
+                    <strong id="summary-hours">1 Hora(s)</strong> <!-- [VALOR] -->
+                  </div>
+                  <div class="summary-line"> <!-- [FILA 3] -->
+                    <span>Horario elegido:</span> <!-- [ETIQUETA] -->
+                    <strong id="summary-time">No asignado</strong> <!-- [VALOR] -->
+                  </div>
+                  <div class="summary-line"> <!-- [FILA 4] -->
+                    <span>Provisión de Gastos Administrativos:</span> <!-- [ETIQUETA] -->
+                    <strong id="summary-guarantee">150 BOB</strong> <!-- [VALOR] -->
+                  </div>
+                  <div class="summary-line total-highlight"> <!-- [FILA TOTAL] -->
+                    <span>Honorarios Estimados (Servicio + Gestiones):</span> <!-- [ETIQUETA] -->
+                    <strong id="summary-total" class="total-amount">0 BOB</strong> <!-- [VALOR] -->
+                  </div>
+                </div>
+
+                <div id="booking-alert-error" class="alert-box error" style="display: none;"></div> <!-- [ALERTA ERROR] -->
+                <div id="booking-alert-success" class="alert-box success" style="display: none;"></div> <!-- [ALERTA ÉXITO] -->
+
+                <button type="submit" id="btn-submit-booking" class="btn btn-submit btn-disabled" disabled> <!-- [SUBMIT CONTROLADO] Deshabilitado hasta pasar todas las validaciones -->
+                  <i class="fa-solid fa-lock"></i> Completa los campos para agendar <!-- [BOTÓN TEXTO] -->
+                </button>
+
+              </form>
+            </div>
+
+          </div>
+
+        </section>
+
+        <section id="tab-mis-consultas" class="panel-tab" data-roles="cliente" aria-labelledby="heading-mis-consultas" style="display: none;"> <!-- [SECCIÓN EXPEDIENTE CLIENTE] Historial, cola de consultas rápidas y bitácora -->
+
+          <div class="section-header"> <!-- [CABECERA] -->
+            <h2 id="heading-mis-consultas"><i class="fa-solid fa-folder-open"></i> Mi Expediente y Consultas en VGMS</h2> <!-- [H2] -->
+            <p>Seguimiento de tus consultas agendadas, lista de consultas rápidas y bitácora de auditoría personal.</p> <!-- [SUBTÍTULO] -->
+          </div>
+
+          <div id="cliente-consultas-lista" class="cliente-reservas-grid" role="region" aria-live="polite"> <!-- [LISTA CLIENTE] Renderizada con DOMPurify -->
+          </div>
+
+          <div class="booking-extras-grid"> <!-- [MÓDULOS EXTRA] Cola anti-XSS + Bitácora con Timestamp -->
+
+            <div class="cola-karaoke"> <!-- [COLA ANTI-XSS] Lista de seguimiento rápido sanitizada con DOMPurify -->
+              <h3><i class="fa-solid fa-list-ol"></i> Cola de Consultas Rápidas</h3> <!-- [H3] -->
+              <p class="schedule-subtitle">Anota dudas o trámites prioritarios para que el equipo de VGMS los revise en tu sesión:</p> <!-- [SUBTÍTULO] -->
+
+              <div class="fila-inline-form"> <!-- [INPUT + BOTÓN] -->
+                <label for="inputConsultaRapida" class="visually-hidden">Tema o duda legal prioritaria</label> <!-- [A11Y] -->
+                <input type="text" id="inputConsultaRapida" placeholder="Ej: Revisar clase Niza para marca corporativa..."> <!-- [INPUT] -->
+                <button type="button" id="btnPedirConsulta" class="btn btn-primary btn-tactil"> <!-- [BOTÓN] -->
+                  <i class="fa-solid fa-plus"></i> Agregar <!-- [TEXTO] -->
+                </button>
+              </div>
+              <span class="field-error" id="errInputConsulta" style="display: none; margin-bottom: 8px;"></span> <!-- [ERROR] -->
+              <div id="listaConsultasRapidas" class="lista-canciones"></div> <!-- [LISTA SANITIZADA] -->
+            </div>
+
+            <div class="booking-history-card"> <!-- [BITÁCORA TIMESTAMP] Registro de eventos con localStorage -->
+              <div class="section-header" style="padding: 0; margin-bottom: 10px;"> <!-- [CABECERA BITÁCORA] -->
+                <h3 style="font-size: 1.05rem;"><i class="fa-solid fa-clock-rotate-left"></i> Bitácora de Interacciones</h3> <!-- [H3] -->
+                <div class="log-controls-bar" style="margin-top: 6px;"> <!-- [CONTROLES] -->
+                  <button type="button" id="toggle-log-btn" class="accordion-toggle-btn"> <!-- [FADETOGGLE] -->
+                    <i class="fa-solid fa-eye-slash"></i> <span>Ocultar / Mostrar</span> <!-- [TEXTO] -->
+                  </button>
+                  <button type="button" id="clear-log-btn" class="accordion-toggle-btn btn-clear-log"> <!-- [LIMPIAR LOGS] -->
+                    <i class="fa-solid fa-trash-can"></i> Limpiar <!-- [TEXTO] -->
+                  </button>
+                </div>
+              </div>
+
+              <div id="log-collapsible-box"> <!-- [CAJA COLAPSABLE] -->
+                <div class="log-stats-row" style="margin-bottom: 10px;"> <!-- [CONTADORES] -->
+                  <div class="stat-badge"><span>Eventos:</span> <strong id="stat-total-events">0</strong></div> <!-- [CONTADOR 1] -->
+                  <div class="stat-badge"><span>Filtros:</span> <strong id="stat-filter-events">0</strong></div> <!-- [CONTADOR 2] -->
+                  <div class="stat-badge"><span>Consultas:</span> <strong id="stat-order-events">0</strong></div> <!-- [CONTADOR 3] -->
+                </div>
+                <div id="activity-log-list" class="activity-log-list" role="log" aria-label="Registro de actividad VGMS"></div> <!-- [LOG ENTRIES] -->
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <section id="tab-abogado-agenda" class="panel-tab" data-roles="trabajador" aria-labelledby="heading-abogado-agenda" style="display: none;"> <!-- [RBAC TRABAJADOR] Agenda operativa del equipo legal -->
+
+          <div class="section-header"> <!-- [CABECERA] -->
+            <h2 id="heading-abogado-agenda"><i class="fa-solid fa-clipboard-list"></i> Agenda Operativa del Estudio — VGMS</h2> <!-- [H2] -->
+            <p>Control de audiencias y asesorías: inicio de atención, entrega de documentación legal y cierre de expediente.</p> <!-- [SUBTÍTULO] -->
+          </div>
+
+          <div class="worker-toolbar-card"> <!-- [TOOLBAR OPERATIVA] Fecha y filtros de estado -->
+            <div class="worker-date-control"> <!-- [CONTROL FECHA] -->
+              <label for="abogado-fecha-agenda"><i class="fa-solid fa-calendar-day"></i> Fecha de Operación:</label> <!-- [LABEL] -->
+              <input type="date" id="abogado-fecha-agenda" class="input-control"> <!-- [INPUT FECHA] -->
+              <button type="button" id="btn-abogado-hoy" class="btn btn-secondary btn-sm"> <!-- [BOTÓN HOY] -->
+                <i class="fa-solid fa-clock"></i> Hoy <!-- [TEXTO] -->
+              </button>
+            </div>
+
+            <div class="worker-status-filters" role="group" aria-label="Filtro de consultas por estado"> <!-- [FILTROS ESTADO] -->
+              <button type="button" class="btn-filter-worker active" data-filter="todas"> <!-- [FILTRO TODAS] -->
+                Todas (<span id="count-op-todas">0</span>) <!-- [CONTADOR] -->
+              </button>
+              <button type="button" class="btn-filter-worker" data-filter="pendiente"> <!-- [FILTRO PENDIENTE] -->
+                <i class="fa-solid fa-hourglass-half"></i> Pendientes (<span id="count-op-pendiente">0</span>) <!-- [CONTADOR] -->
+              </button>
+              <button type="button" class="btn-filter-worker" data-filter="en_atencion"> <!-- [FILTRO EN ATENCIÓN] -->
+                <i class="fa-solid fa-scale-balanced"></i> En Atención (<span id="count-op-en-atencion">0</span>) <!-- [CONTADOR] -->
+              </button>
+              <button type="button" class="btn-filter-worker" data-filter="completada"> <!-- [FILTRO COMPLETADA] -->
+                <i class="fa-solid fa-circle-check"></i> Completadas (<span id="count-op-completada">0</span>) <!-- [CONTADOR] -->
+              </button>
+            </div>
+          </div>
+
+          <div id="abogado-agenda-lista" class="worker-agenda-grid" role="region" aria-live="polite"> <!-- [LISTA OPERATIVA] -->
+          </div>
+
+        </section>
+
+        <section id="tab-abogado-servicios" class="panel-tab" data-roles="trabajador" aria-labelledby="heading-abogado-servicios" style="display: none;"> <!-- [RBAC TRABAJADOR] Estado en vivo de los 8 servicios -->
+
+          <div class="section-header"> <!-- [CABECERA] -->
+            <h2 id="heading-abogado-servicios"><i class="fa-solid fa-table-cells-large"></i> Disponibilidad de Especialistas en Vivo</h2> <!-- [H2] -->
+            <p>Monitoreo inmediato de carga de citas por servicio y abogado especialista.</p> <!-- [SUBTÍTULO] -->
+          </div>
+
+          <div id="abogado-servicios-grid" class="courts-live-status-grid"> <!-- [GRID EN VIVO] -->
+          </div>
+
+        </section>
+
+        <section id="tab-admin-kpi" class="panel-tab" data-roles="admin" aria-labelledby="heading-admin-kpi" style="display: none;"> <!-- [RBAC ADMIN] Dashboard gerencial de KPIs -->
+
+          <div class="section-header"> <!-- [CABECERA] -->
+            <h2 id="heading-admin-kpi"><i class="fa-solid fa-chart-pie"></i> Dashboard Gerencial — Socio Director VGMS</h2> <!-- [H2] -->
+            <p>Métricas financieras de honorarios, consultas activas y demanda por área de práctica legal.</p> <!-- [SUBTÍTULO] -->
+          </div>
+
+          <div class="kpi-grid"> <!-- [4 TARJETAS KPI] -->
+            <div class="kpi-card kpi-card--recaudacion"> <!-- [KPI 1] Total honorarios -->
+              <div class="kpi-card__icon"><i class="fa-solid fa-money-bill-wave"></i></div> <!-- [ICONO] -->
+              <div class="kpi-card__content"> <!-- [TEXTO] -->
+                <span class="kpi-card__label">Honorarios Proyectados</span> <!-- [LABEL] -->
+                <strong id="kpi-total-recaudado" class="kpi-card__val">0 Bs</strong> <!-- [VALOR] -->
+                <span class="kpi-card__sub">Ingresos por consultas vigentes</span> <!-- [SUB] -->
+              </div>
+            </div>
+
+            <div class="kpi-card kpi-card--activas"> <!-- [KPI 2] Consultas activas -->
+              <div class="kpi-card__icon"><i class="fa-solid fa-calendar-check"></i></div> <!-- [ICONO] -->
+              <div class="kpi-card__content"> <!-- [TEXTO] -->
+                <span class="kpi-card__label">Consultas Activas</span> <!-- [LABEL] -->
+                <strong id="kpi-consultas-activas" class="kpi-card__val">0</strong> <!-- [VALOR] -->
+                <span class="kpi-card__sub">Pendientes y en atención</span> <!-- [SUB] -->
+              </div>
+            </div>
+
+            <div class="kpi-card kpi-card--top"> <!-- [KPI 3] Servicio más solicitado -->
+              <div class="kpi-card__icon"><i class="fa-solid fa-trophy"></i></div> <!-- [ICONO] -->
+              <div class="kpi-card__content"> <!-- [TEXTO] -->
+                <span class="kpi-card__label">Servicio Más Solicitado</span> <!-- [LABEL] -->
+                <strong id="kpi-servicio-top" class="kpi-card__val">--</strong> <!-- [VALOR] -->
+                <span class="kpi-card__sub" id="kpi-servicio-top-sub">Mayor demanda</span> <!-- [SUB] -->
+              </div>
+            </div>
+
+            <div class="kpi-card kpi-card--ocupacion"> <!-- [KPI 4] Ocupación del día -->
+              <div class="kpi-card__icon"><i class="fa-solid fa-percent"></i></div> <!-- [ICONO] -->
+              <div class="kpi-card__content"> <!-- [TEXTO] -->
+                <span class="kpi-card__label">Ocupación Agenda Hoy</span> <!-- [LABEL] -->
+                <strong id="kpi-tasa-ocupacion" class="kpi-card__val">0%</strong> <!-- [VALOR] -->
+                <span class="kpi-card__sub" id="kpi-ocupacion-detalle">0 de 72 bloques diarios</span> <!-- [SUB] -->
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-breakdown-grid"> <!-- [DESGLOSE KPI] Por área y gestiones complementarias -->
+            <div class="kpi-breakdown-card"> <!-- [DESGLOSE 1] -->
+              <h3><i class="fa-solid fa-layer-group"></i> Distribución por Área de Práctica</h3> <!-- [H3] -->
+              <div id="kpi-breakdown-area" class="breakdown-list"> <!-- [CONTENEDOR] -->
+              </div>
+            </div>
+            <div class="kpi-breakdown-card"> <!-- [DESGLOSE 2] -->
+              <h3><i class="fa-solid fa-box-open"></i> Gestiones Complementarias Contratadas</h3> <!-- [H3] -->
+              <div id="kpi-breakdown-adicionales" class="breakdown-list"> <!-- [CONTENEDOR] -->
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <section id="tab-admin-servicios" class="panel-tab" data-roles="admin" aria-labelledby="heading-admin-servicios" style="display: none;"> <!-- [RBAC ADMIN] Gestión de honorarios y disponibilidad -->
+
+          <div class="section-header"> <!-- [CABECERA] -->
+            <h2 id="heading-admin-servicios"><i class="fa-solid fa-sliders"></i> Gestión de Servicios Legales y Honorarios</h2> <!-- [H2] -->
+            <p>Actualización de honorarios base (Bs) y estado operativo sincronizados con MySQL (XAMPP) o LocalStorage.</p> <!-- [SUBTÍTULO] -->
+          </div>
+
+          <div id="admin-servicios-container" class="admin-courts-grid"> <!-- [CONTENEDOR TARJETAS ADMIN] -->
+          </div>
+
+        </section>
+
+        <section id="tab-admin-historial" class="panel-tab" data-roles="admin" aria-labelledby="heading-admin-historial" style="display: none;"> <!-- [RBAC ADMIN] Tabla global de consultas -->
+
+          <div class="section-header"> <!-- [CABECERA] -->
+            <h2 id="heading-admin-historial"><i class="fa-solid fa-table-list"></i> Historial Global de Consultas Jurídicas</h2> <!-- [H2] -->
+            <p>Registro completo de solicitudes de clientes con filtros por servicio, estado y anulación directa.</p> <!-- [SUBTÍTULO] -->
+          </div>
+
+          <div class="admin-table-filters-card"> <!-- [FILTROS TABLA ADMIN] -->
+            <div class="filter-item-input"> <!-- [BUSCADOR TABLA] -->
+              <label for="admin-buscar-consulta"><i class="fa-solid fa-magnifying-glass"></i> Buscar:</label> <!-- [LABEL] -->
+              <input type="text" id="admin-buscar-consulta" class="input-control" placeholder="Buscar por titular, celular o ID..."> <!-- [INPUT] -->
+            </div>
+
+            <div class="filter-item-select"> <!-- [FILTRO SERVICIO] -->
+              <label for="admin-filtro-servicio"><i class="fa-solid fa-briefcase"></i> Servicio:</label> <!-- [LABEL] -->
+              <select id="admin-filtro-servicio" class="input-control"> <!-- [SELECT] -->
+                <option value="todos">Todos los servicios</option> <!-- [OPCIÓN ALL] -->
+                <option value="S1">S1: Registro de Marca</option> <!-- [S1] -->
+                <option value="S2">S2: Patentes y Autor</option> <!-- [S2] -->
+                <option value="S3">S3: Protección Activa</option> <!-- [S3] -->
+                <option value="S4">S4: Sociedades Corporativo</option> <!-- [S4] -->
+                <option value="S5">S5: Administrativo y Público</option> <!-- [S5] -->
+                <option value="S6">S6: Contratos y Legaltech</option> <!-- [S6] -->
+                <option value="S7">S7: Constitucional y Tributario</option> <!-- [S7] -->
+                <option value="S8">S8: Defensa Penal Ley 004</option> <!-- [S8] -->
+              </select>
+            </div>
+
+            <div class="filter-item-select"> <!-- [FILTRO ESTADO] -->
+              <label for="admin-filtro-estado"><i class="fa-solid fa-tag"></i> Estado:</label> <!-- [LABEL] -->
+              <select id="admin-filtro-estado" class="input-control"> <!-- [SELECT] -->
+                <option value="todos">Todos los estados</option> <!-- [ALL] -->
+                <option value="pendiente">Pendiente</option> <!-- [PENDIENTE] -->
+                <option value="en_atencion">En Atención</option> <!-- [EN ATENCIÓN] -->
+                <option value="completada">Completada</option> <!-- [COMPLETADA] -->
+                <option value="cancelada">Cancelada</option> <!-- [CANCELADA] -->
+              </select>
+            </div>
+          </div>
+
+          <div class="admin-table-wrapper"> <!-- [TABLA RESPONSIVA] -->
+            <table class="admin-table" aria-label="Historial global de consultas VGMS Abogados"> <!-- [TABLE A11Y] -->
+              <thead> <!-- [THEAD] -->
+                <tr> <!-- [ENCABEZADOS] -->
+                  <th scope="col"># ID</th> <!-- [COL 1] -->
+                  <th scope="col">Fecha &amp; Hora</th> <!-- [COL 2] -->
+                  <th scope="col">Servicio</th> <!-- [COL 3] -->
+                  <th scope="col">Cliente</th> <!-- [COL 4] -->
+                  <th scope="col">Modalidad</th> <!-- [COL 5] -->
+                  <th scope="col">Gestiones</th> <!-- [COL 6] -->
+                  <th scope="col">Total</th> <!-- [COL 7] -->
+                  <th scope="col">Estado</th> <!-- [COL 8] -->
+                  <th scope="col">Acción</th> <!-- [COL 9] -->
+                </tr>
+              </thead>
+              <tbody id="admin-historial-tbody"> <!-- [TBODY DINÁMICO] -->
+              </tbody>
+            </table>
+          </div>
+
+        </section>
+
+        <section id="tab-info" class="panel-tab" data-roles="cliente trabajador admin" aria-labelledby="heading-info"> <!-- [AUDITORÍA Y CANALES] Compartida para los 3 roles -->
+
+          <div class="section-header"> <!-- [CABECERA] -->
+            <h2 id="heading-info"><i class="fa-solid fa-graduation-cap"></i> Panel de Auditoría WCAG, Ética y Canales (UPDS)</h2> <!-- [H2] -->
+            <p>Herramientas interactivas para auditar contraste WCAG, vista móvil, integridad del DOM y semántica a11y.</p> <!-- [SUBTÍTULO] -->
+          </div>
+
+          <div class="audit-panel-card"> <!-- [PANEL DE SIMULACIÓN EN VIVO] -->
+            <h3><i class="fa-solid fa-vial-circle-check"></i> Pruebas en Vivo de Accesibilidad y Arquitectura</h3> <!-- [H3] -->
+            <p class="audit-instructions">Ejecuta las 4 verificaciones técnicas del módulo sobre el catálogo jurídico VGMS:</p> <!-- [INSTRUCCIÓN] -->
+
+            <div class="audit-buttons-grid"> <!-- [BOTONES AUDITORÍA] -->
+              <button type="button" id="btnSimularContraste" class="btn btn-audit"> <!-- [BOTÓN 1] Alto Contraste WCAG -->
+                <i class="fa-solid fa-circle-half-stroke"></i> 1. Alternar Alto Contraste WCAG <!-- [TEXTO] -->
+              </button>
+              <button type="button" id="btnSimularVista" class="btn btn-audit"> <!-- [BOTÓN 2] Simulación 1 Columna -->
+                <i class="fa-solid fa-mobile-screen"></i> 2. Simular Vista 1 Columna Móvil <!-- [TEXTO] -->
+              </button>
+              <button type="button" id="btnSmokeTest" class="btn btn-audit"> <!-- [BOTÓN 3] Smoke Test DOM -->
+                <i class="fa-solid fa-flask"></i> 3. Ejecutar Smoke Test DOM <!-- [TEXTO] -->
+              </button>
+              <button type="button" id="btnAuditarA11Y" class="btn btn-audit"> <!-- [BOTÓN 4] Auditoría Semántica a11y -->
+                <i class="fa-solid fa-universal-access"></i> 4. Auditar Etiquetas Semánticas a11y <!-- [TEXTO] -->
+              </button>
+            </div>
+
+            <div class="audit-results-box"> <!-- [SALIDAS AUDITORÍA] -->
+              <div class="audit-result-item"> <!-- [RESULTADO 1] -->
+                <span class="audit-label"><i class="fa-solid fa-terminal"></i> Resultado de Smoke Test:</span> <!-- [LABEL] -->
+                <p id="salidaAudit" class="audit-output" aria-live="polite"> <!-- [ARIA-LIVE] -->
+                  Haz clic en "3. Ejecutar Smoke Test DOM" para auditar botones, imágenes sin alt y enlaces vacíos.
+                </p>
+              </div>
+              <div class="audit-result-item"> <!-- [RESULTADO 2] -->
+                <span class="audit-label"><i class="fa-solid fa-clipboard-check"></i> Reporte de Accesibilidad a11y:</span> <!-- [LABEL] -->
+                <p id="reporteA11Y" class="audit-output" role="status" aria-live="polite"> <!-- [ARIA-LIVE] -->
+                  Haz clic en "4. Auditar Etiquetas Semánticas a11y" para verificar etiquetas HTML5 semánticas.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="sub-section"> <!-- [PRINCIPIOS ÉTICOS VGMS] -->
+            <h3 class="sub-section-title"><i class="fa-solid fa-book-open"></i> Estándares de Atención VGMS Abogados</h3> <!-- [H3] -->
+            <div class="rules-grid"> <!-- [GRID REGLAS] -->
+              <article class="rule-card"> <!-- [REGLA 1] -->
+                <i class="fa-solid fa-user-shield"></i> <!-- [ICONO] -->
+                <h4>Confidencialidad Absoluta</h4> <!-- [H4] -->
+                <p>Actuamos bajo estricto secreto profesional, resguardando patentes, marcas en trámite y documentos corporativos de cada cliente.</p> <!-- [TEXTO] -->
+              </article>
+              <article class="rule-card"> <!-- [REGLA 2] -->
+                <i class="fa-solid fa-file-invoice-dollar"></i> <!-- [ICONO] -->
+                <h4>Transparencia en Costos y Plazos</h4> <!-- [H4] -->
+                <p>Informamos desde la primera consulta los honorarios, tasas administrativas ante SENAPI y etapas procesales proyectadas.</p> <!-- [TEXTO] -->
+              </article>
+              <article class="rule-card"> <!-- [REGLA 3] -->
+                <i class="fa-solid fa-laptop-code"></i> <!-- [ICONO] -->
+                <h4>Seguimiento Legaltech</h4> <!-- [H4] -->
+                <p>Monitoreo continuo de expedientes y notificaciones tempranas para responder oposiciones o requerimientos con agilidad.</p> <!-- [TEXTO] -->
+              </article>
+            </div>
+          </div>
+
+          <div class="sub-section"> <!-- [CANALES OFICIALES] Todos con href válido (cero href="#") -->
+            <h3 class="sub-section-title"><i class="fa-solid fa-share-nodes"></i> Canales Oficiales VGMS Abogados</h3> <!-- [H3] -->
+            <div class="social-grid"> <!-- [GRID CANALES] -->
+              <a href="https://vgms.com.bo/wp/" target="_blank" rel="noopener noreferrer" class="social-card" data-network="Sitio Web Oficial VGMS"> <!-- [CANAL 1] Web previa -->
+                <i class="fa-solid fa-globe"></i> <!-- [ICONO] -->
+                <h4>Sitio Institucional</h4> <!-- [H4] -->
+                <span>vgms.com.bo/wp</span> <!-- [DATO REAL] -->
+                <small class="social-action">Portal Corporativo</small> <!-- [CTA] -->
+              </a>
+              <a href="mailto:fvela@vgms.com.bo" target="_blank" rel="noopener noreferrer" class="social-card" data-network="Correo Dr. Francisco Vela"> <!-- [CANAL 2] Correo real -->
+                <i class="fa-solid fa-envelope"></i> <!-- [ICONO] -->
+                <h4>Correo Directo</h4> <!-- [H4] -->
+                <span>fvela@vgms.com.bo</span> <!-- [DATO REAL] -->
+                <small class="social-action">Consultas Formales</small> <!-- [CTA] -->
+              </a>
+              <a href="tel:+59122430273" target="_blank" rel="noopener noreferrer" class="social-card" data-network="Teléfono Oficina La Paz"> <!-- [CANAL 3] Teléfono fijo real -->
+                <i class="fa-solid fa-phone"></i> <!-- [ICONO] -->
+                <h4>Central Telefónica</h4> <!-- [H4] -->
+                <span>+591 2 2430273</span> <!-- [DATO REAL] -->
+                <small class="social-action">Edificio La Paz I</small> <!-- [CTA] -->
+              </a>
+              <a href="https://wa.me/59167005417" target="_blank" rel="noopener noreferrer" class="social-card" data-network="WhatsApp Directo VGMS"> <!-- [CANAL 4] WhatsApp real -->
+                <i class="fa-brands fa-whatsapp"></i> <!-- [ICONO] -->
+                <h4>WhatsApp Directo</h4> <!-- [H4] -->
+                <span>+591 67005417</span> <!-- [DATO REAL] -->
+                <small class="social-action">Atención Inmediata</small> <!-- [CTA] -->
+              </a>
+            </div>
+          </div>
+
+        </section>
+
+      </main>
+
+      <footer class="main-footer"> <!-- [FOOTER SEMÁNTICO] Pie institucional con dirección real y resumen técnico -->
+        <div class="footer-container"> <!-- [GRID FOOTER] -->
+          <div class="footer-col"> <!-- [COLUMNA 1] Estudio y ubicación real -->
+            <h4>VGMS Abogados &amp; Consultores S.R.L.</h4> <!-- [H4] -->
+            <p>Firma legal fundada en 2021, miembros de ASIPI. Especialistas en Propiedad Intelectual, Derecho Corporativo, Civil y Penal.</p> <!-- [DESCRIPCIÓN] -->
+            <p><i class="fa-solid fa-location-dot"></i> Av. Arce esq. Campos, Edif. La Paz I Nro. 2724 (int.), La Paz, Bolivia</p> <!-- [DIRECCIÓN REAL] -->
+          </div>
+          <div class="footer-col"> <!-- [COLUMNA 2] Contacto directo real -->
+            <h4>Atención y Consultas</h4> <!-- [H4] -->
+            <p><i class="fa-solid fa-phone"></i> Teléfono: +591 2 2430273</p> <!-- [TELÉFONO REAL] -->
+            <p><i class="fa-brands fa-whatsapp"></i> WhatsApp: +591 67005417</p> <!-- [WHATSAPP REAL] -->
+            <p><i class="fa-solid fa-envelope"></i> fvela@vgms.com.bo</p> <!-- [EMAIL REAL] -->
+            <p><i class="fa-solid fa-clock"></i> Lunes a Viernes • 09:00 – 19:00</p> <!-- [HORARIO] -->
+          </div>
+          <div class="footer-col"> <!-- [COLUMNA 3] Arquitectura implementada en el módulo -->
+            <h4>Arquitectura Full Stack &amp; PWA</h4> <!-- [H4] -->
+            <p><i class="fa-solid fa-database"></i> MySQL (XAMPP) + API REST PHP PDO + JSON</p> <!-- [TECNOLOGÍA 1] -->
+            <p><i class="fa-solid fa-wifi"></i> PWA Offline-First (Service Worker + Fallback LocalStorage)</p> <!-- [TECNOLOGÍA 2] -->
+            <p><i class="fa-solid fa-shield-halved"></i> Control de Roles RBAC + Sanitización Anti-XSS DOMPurify</p> <!-- [TECNOLOGÍA 3] -->
+          </div>
+        </div>
+        <div class="footer-bottom"> <!-- [COPYRIGHT] -->
+          <p>&copy; 2026 VGMS Abogados &amp; Consultores S.R.L. (Dr. Francisco Vela) — Catálogo Jurídico Full Stack. Todos los derechos reservados.</p> <!-- [TEXTO LEGAL] -->
+        </div>
+      </footer>
+
+    </div>
+
+  </div>
+
+  <div id="modal-login" class="modal-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-login-title"> <!-- [MODAL LOGIN RBAC] Autenticación con roles y autocompletado demo -->
+    <div class="modal-card"> <!-- [TARJETA MODAL] -->
+      <div class="modal-header"> <!-- [CABECERA MODAL] -->
+        <h3 id="modal-login-title"><i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión — VGMS Legal</h3> <!-- [TÍTULO] -->
+        <button type="button" id="modal-login-close-btn" class="modal-close-btn" aria-label="Cerrar modal">&times;</button> <!-- [CERRAR] -->
+      </div>
+      <div class="modal-body"> <!-- [CUERPO MODAL] -->
+        <p class="modal-instructions">Ingresa tus credenciales o utiliza los botones de demostración para evaluar los 3 roles RBAC:</p> <!-- [INSTRUCCIÓN] -->
+
+        <div class="demo-auth-group"> <!-- [AUTOCOMPLETADO DEMO] -->
+          <span class="demo-auth-title"><i class="fa-solid fa-bolt"></i> Autocompletar Credenciales Demo:</span> <!-- [TÍTULO] -->
+          <div class="demo-auth-buttons"> <!-- [BOTONES DEMO] -->
+            <button type="button" class="btn-demo-auth" data-email="fvela@vgms.com.bo" data-pass="Admin1234"> <!-- [DEMO ADMIN] Socio Director -->
+              ⚖️ Socio Admin (Dr. Vela)
+            </button>
+            <button type="button" class="btn-demo-auth" data-email="recepcion@vgms.com.bo" data-pass="Trabajador1234"> <!-- [DEMO TRABAJADOR] Abogado/Recepción -->
+              👔 Abogado (Dr. Andrade)
+            </button>
+            <button type="button" class="btn-demo-auth" data-email="vania.ramos@gmail.com" data-pass="Cliente1234"> <!-- [DEMO CLIENTE] Vania Ramos -->
+              📁 Cliente (Vania Ramos)
+            </button>
+          </div>
+        </div>
+
+        <form id="form-login" novalidate> <!-- [FORM LOGIN] -->
+          <div class="form-group"> <!-- [CAMPO CORREO] -->
+            <label for="login-email"><i class="fa-solid fa-envelope"></i> Correo Electrónico:</label> <!-- [LABEL] -->
+            <input type="email" id="login-email" name="login-email" placeholder="fvela@vgms.com.bo" required autocomplete="username"> <!-- [INPUT] -->
+          </div>
+          <div class="form-group"> <!-- [CAMPO PASSWORD] -->
+            <label for="login-password"><i class="fa-solid fa-lock"></i> Contraseña:</label> <!-- [LABEL] -->
+            <input type="password" id="login-password" name="login-password" placeholder="••••••••" required autocomplete="current-password"> <!-- [INPUT] -->
+          </div>
+
+          <div id="login-alert-error" class="alert-box error" style="display: none;"></div> <!-- [ERROR LOGIN] -->
+
+          <button type="submit" id="btn-submit-login" class="btn btn-primary btn-block"> <!-- [BOTÓN SUBMIT] -->
+            <i class="fa-solid fa-sign-in-alt"></i> Ingresar a Plataforma VGMS
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-admin-servicio" class="modal-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-servicio-title"> <!-- [MODAL ADMIN SERVICIO] Edita honorario y estado desde catálogo -->
+    <div class="modal-card"> <!-- [TARJETA MODAL] -->
+      <div class="modal-header"> <!-- [CABECERA] -->
+        <h3 id="modal-servicio-title"><i class="fa-solid fa-sliders"></i> Gestionar Servicio (Rol Socio Admin)</h3> <!-- [TÍTULO] -->
+        <button type="button" id="modal-servicio-close-btn" class="modal-close-btn" aria-label="Cerrar modal">&times;</button> <!-- [CERRAR] -->
+      </div>
+      <div class="modal-body"> <!-- [CUERPO] -->
+        <form id="form-admin-servicio" novalidate> <!-- [FORM ADMIN] -->
+          <input type="hidden" id="admin-servicio-id"> <!-- [ID OCULTO S1-S8] -->
+          <div class="form-group"> <!-- [CAMPO NOMBRE] -->
+            <label for="admin-servicio-nombre">Servicio Jurídico:</label> <!-- [LABEL] -->
+            <input type="text" id="admin-servicio-nombre" readonly style="opacity: 0.85;"> <!-- [SOLO LECTURA] -->
+          </div>
+          <div class="form-group"> <!-- [CAMPO HONORARIO] -->
+            <label for="admin-servicio-precio">Honorario Base (Bs):</label> <!-- [LABEL] -->
+            <input type="number" id="admin-servicio-precio" min="200" max="20000" step="50" required> <!-- [INPUT NUMÉRICO] -->
+          </div>
+          <div class="form-group"> <!-- [CAMPO ESTADO] -->
+            <label for="admin-servicio-estado">Estado Operativo:</label> <!-- [LABEL] -->
+            <select id="admin-servicio-estado"> <!-- [SELECT ESTADO] -->
+              <option value="disponible">Disponible para agendamiento</option> <!-- [DISPONIBLE] -->
+              <option value="pausado">Pausado temporalmente (Agenda cerrada)</option> <!-- [PAUSADO] -->
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block"> <!-- [GUARDAR] -->
+            <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios en MySQL
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-overlay" class="modal-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-title"> <!-- [MODAL CONFIRMACIÓN + TIMER 30S] Confirma consulta antes de guardar -->
+    <div class="modal-card"> <!-- [TARJETA MODAL] -->
+      <div class="modal-header"> <!-- [CABECERA] -->
+        <h3 id="modal-title"><i class="fa-solid fa-file-shield"></i> Confirmar Consulta — VGMS Abogados</h3> <!-- [TÍTULO] -->
+        <button type="button" id="modal-close-btn" class="modal-close-btn" aria-label="Cerrar ventana modal">&times;</button> <!-- [CERRAR] -->
+      </div>
+      <div class="modal-body"> <!-- [CUERPO] -->
+        <p class="modal-instructions">Verifique el resumen de su solicitud jurídica antes de confirmar el turno:</p> <!-- [INSTRUCCIÓN] -->
+
+        <div class="modal-details-box"> <!-- [RESUMEN MODAL] -->
+          <div class="modal-detail-row"> <!-- [FILA SERVICIO] -->
+            <span><i class="fa-solid fa-briefcase"></i> Servicio:</span> <!-- [ETIQUETA] -->
+            <strong id="modal-service-name">S1: Registro de Marca</strong> <!-- [VALOR DINÁMICO] -->
+          </div>
+          <div class="modal-detail-row"> <!-- [FILA TITULAR] -->
+            <span><i class="fa-solid fa-user"></i> Titular:</span> <!-- [ETIQUETA] -->
+            <strong id="modal-client-name">Vania Ramos</strong> <!-- [VALOR DINÁMICO] -->
+          </div>
+          <div class="modal-detail-row"> <!-- [FILA HORARIO] -->
+            <span><i class="fa-solid fa-calendar-day"></i> Fecha &amp; Horario:</span> <!-- [ETIQUETA] -->
+            <strong id="modal-schedule">2026-11-23 (10:00 - 11:00)</strong> <!-- [VALOR DINÁMICO] -->
+          </div>
+          <div class="modal-detail-row"> <!-- [FILA PROVISIÓN] -->
+            <span><i class="fa-solid fa-shield-halved"></i> Provisión Administrativa:</span> <!-- [ETIQUETA] -->
+            <strong id="modal-guarantee">150 BOB (Deducible)</strong> <!-- [VALOR] -->
+          </div>
+          <div class="modal-detail-row highlight-row"> <!-- [FILA MONTO] -->
+            <span><i class="fa-solid fa-money-bill-wave"></i> Honorario Total:</span> <!-- [ETIQUETA] -->
+            <strong id="modal-total-amount">1800 BOB (1 Horas)</strong> <!-- [VALOR DINÁMICO] -->
+          </div>
+        </div>
+
+        <div class="modal-timer-banner"> <!-- [TEMPORIZADOR 30S] Cuenta regresiva asíncrona con setInterval -->
+          <i class="fa-solid fa-stopwatch"></i> <!-- [ICONO] -->
+          <span>Tiempo Restante para Confirmar: <strong id="modal-countdown">00:30s</strong></span> <!-- [CUENTA REGRESIVA] -->
+        </div>
+      </div>
+      <div class="modal-footer"> <!-- [PIE MODAL] -->
+        <button type="button" id="modal-cancel-btn" class="btn btn-modal-cancel">Cancelar</button> <!-- [CANCELAR] Limpia el formulario -->
+        <button type="button" id="modal-confirm-btn" class="btn btn-modal-confirm">Confirmar Consulta</button> <!-- [CONFIRMAR] Envía a MySQL / LocalStorage -->
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"> <!-- [TOAST CONTAINER] Notificaciones flotantes no intrusivas -->
+    <div id="toast-alert" class="toast-card" style="display: none;" role="status"> <!-- [TOAST CARD] -->
+      <div class="toast-icon"><i class="fa-solid fa-circle-check"></i></div> <!-- [ICONO] -->
+      <div class="toast-content"> <!-- [CONTENIDO] -->
+        <h4 id="toast-title">¡Consulta Registrada con Éxito!</h4> <!-- [TÍTULO TOAST] -->
+        <p id="toast-message">Tu cita legal ha sido agendada en VGMS Abogados &amp; Consultores.</p> <!-- [MENSAJE TOAST] -->
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <!-- [JQUERY 3.7.1] Librería base para selectores, eventos y efectos -->
+  <script src="script.js?v=1"></script> <!-- [LÓGICA UNIFICADA] Script principal con RBAC, filtros, validaciones y PWA -->
+</body>
+
+</html> <!-- [FIN HTML5] Cierre del documento VGMS Abogados & Consultores -->
