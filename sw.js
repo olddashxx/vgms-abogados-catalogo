@@ -1,23 +1,24 @@
 // [PWA OFFLINE-FIRST] Identificador único de versión de caché para invalidación controlada en Service Worker
-const CACHE_NAME = 'vgms-abogados-v1';
+const CACHE_NAME = 'vgms-abogados-v4';
 
-// [PWA OFFLINE-FIRST] Lista de archivos locales esenciales de la arquitectura Un Solo Código Base
+// [PWA OFFLINE-FIRST] Lista de archivos locales esenciales incluyendo catálogo JSON para fetch offline
 const LOCAL_ASSETS = [
   './', // [PWA] Ruta raíz del directorio actual
-  './index.html', // [PWA] Documento HTML5 principal de la aplicación jurídica
-  './styles.css', // [PWA] Hoja de estilos Mobile-First con tokens 60-30-10
-  './script.js', // [PWA] Lógica principal, RBAC, filtros y validaciones
-  './manifest.json' // [PWA] Manifiesto de aplicación instalable
+  './index.html', // [PWA] Documento HTML5 principal de VGMS Abogados
+  './styles.css', // [PWA] Hoja de estilos corporativa v4
+  './script.js', // [PWA] Lógica frontend, pestañas SPA, fetch, filtros y validación
+  './manifest.json', // [PWA] Manifiesto de aplicación instalable
+  './data/servicios.json' // [PWA FETCH] Catálogo jurídico JSON consumido por Fetch API
 ];
 
-// [PWA OFFLINE-FIRST] Recursos externos CDN cacheados para operación offline (jQuery, Font Awesome y DOMPurify)
+// [PWA OFFLINE-FIRST] Recursos externos CDN cacheados para operación offline (jQuery y DOMPurify)
 const CDN_ASSETS = [
-  'https://code.jquery.com/jquery-3.7.1.min.js', // [JQUERY] Librería DOM y eventos
+  'https://code.jquery.com/jquery-3.7.1.min.js', // [JQUERY] Librería DOM, efectos y eventos
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css', // [ICONOGRAFÍA] Iconos vectoriales Font Awesome
   'https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js' // [ANTI-XSS] Sanitizador HTML DOMPurify
 ];
 
-// [PWA INSTALL] Evento de instalación del Service Worker: precarga el App Shell en Cache Storage
+// [PWA INSTALL] Evento de instalación del Service Worker: precarga el App Shell y el JSON en Cache Storage
 self.addEventListener('install', (event) => {
   event.waitUntil( // [PWA INSTALL] Mantiene la fase de instalación abierta hasta completar el caché
     caches.open(CACHE_NAME).then((cache) => { // [PWA CACHE] Abre o crea el almacén de caché versionado
@@ -26,7 +27,7 @@ self.addEventListener('install', (event) => {
           console.log('[PWA VGMS] Recurso CDN omitido en precaché inicial:', url); // [PWA LOG] Registra advertencia controlada
         });
       });
-      return cache.addAll(LOCAL_ASSETS); // [PWA APP SHELL] Guarda de forma atómica todos los archivos locales
+      return cache.addAll(LOCAL_ASSETS); // [PWA APP SHELL] Guarda de forma atómica los archivos locales y servicios.json
     })
   );
   self.skipWaiting(); // [PWA LIFECYCLE] Fuerza la activación inmediata del nuevo Service Worker
@@ -46,15 +47,11 @@ self.addEventListener('activate', (event) => {
   self.clients.claim(); // [PWA LIFECYCLE] Toma control inmediato de todas las pestañas abiertas
 });
 
-// [PWA FETCH] Interceptor de red: Network-Only para API REST PHP/MySQL y Cache-First para activos estáticos
+// [PWA FETCH] Interceptor de red: estrategia pura Cache-First con actualización dinámica y respaldo offline
 self.addEventListener('fetch', (event) => {
-  if (event.request.url.includes('/api/')) { // [PWA NETWORK-ONLY] Excluye endpoints PHP/MySQL para garantizar datos en vivo
-    return; // [PWA NETWORK-ONLY] Permite que la petición vaya directo al servidor backend
-  }
-
   if (event.request.method !== 'GET') return; // [PWA SEGURIDAD] Solo cachea peticiones HTTP idempotentes GET
 
-  event.respondWith( // [PWA CACHE-FIRST] Intercepta la respuesta HTTP con estrategia Cache-First
+  event.respondWith( // [PWA CACHE-FIRST] Intercepta peticiones GET con estrategia Cache-First
     caches.match(event.request).then((cachedResponse) => { // [PWA CACHE] Busca coincidencia previa en Cache Storage
       if (cachedResponse) { // [PWA CACHE HIT] Verifica si el recurso ya existe en caché local
         return cachedResponse; // [PWA CACHE HIT] Devuelve el recurso instantáneamente sin depender de internet
